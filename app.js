@@ -6,8 +6,12 @@ const rootDir = require('./util/rootDir.js');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const authRoutes = require('./routes/auth.js');
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use('/auth', authRoutes);
 
 app.use(express.static(path.join(rootDir, 'public')));
 
