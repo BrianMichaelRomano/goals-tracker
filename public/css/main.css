@@ -1,12 +1,35 @@
-html {
+
+
+html, body {
+  width: 100%;
+  height: 100%;
   padding: 0px;
   margin: 0px;
-  color: rgb(71, 71, 71);
 }
 
-body {
-  padding: 0px;
-  margin: 0px;
+main {
+  flex-grow: 1;
+}
+
+header, main, footer {
+  flex-shrink: 0;
+}
+
+footer {
+  color: white;
+  min-height: 60px;
+  background-color: rgb(44, 44, 44);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.super-container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .container {
@@ -16,6 +39,17 @@ body {
   margin-right: auto;
   margin-left: auto;
   max-width: 360px;
+}
+
+button {
+  color: white;
+  padding: 7px 15px;
+  margin: 0px;
+  background-color: rgb(44, 44, 44);
+  border: 1px solid rgb(44, 44, 44);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 nav {
@@ -47,6 +81,10 @@ nav a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.margin-r {
+  margin-right: 10px;
 }
 
 @media (min-width: 576px) {
