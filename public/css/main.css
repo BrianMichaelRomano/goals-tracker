@@ -24,7 +24,6 @@ footer {
   justify-content: center;
 }
 
-
 button {
   color: white;
   padding: 7px 15px;
@@ -48,6 +47,10 @@ form {
   max-width: 400px;
   min-width: 300px;
   height: 100%;
+}
+
+.secondary-color {
+  color: rgb(21, 156, 66);
 }
 
 .form-container {
