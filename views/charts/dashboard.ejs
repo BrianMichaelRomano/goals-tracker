@@ -3,7 +3,6 @@
 
 <head>
   <%- include('../includes/header.ejs') %>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
 </head>
 
 <body>
@@ -11,13 +10,32 @@
     <%- include('../includes/nav.ejs') %>
     <main class="container">
       <div class="form-container">
-        <h1>Login</h1>
-        <canvas id="myChart" width="400" height="400"></canvas>
+        <h1>Dashboard</h1>
+        <canvas id="myChart" width="800" height="400"></canvas>
+        <div id="chartDiv"></div>
+        <ul class="goalList">
+          <li>
+            <button id="1">Goal 1</button>
+          </li>
+          <li>
+            <button id="2">Goal 2</button>
+          </li>
+          <li>
+            <button id="3">Goal 3</button>
+          </li>
+          <li>
+            <button id="4">Goal 4</button>
+          </li>
+          <li>
+            <button id="5">Goal 5</button>
+          </li>
+        </ul>
       </div>
     </main>
     <%- include('../includes/footer.ejs') %>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <script src="/js/dashboardChart.js"></script>
 </body>
 
