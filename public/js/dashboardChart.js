@@ -2,65 +2,66 @@ const chartType = 'line';
 const chartLabels = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
 const data = {};
 
-data.goalData1 = [{
-  label: '# of Votes',
+data.goalData1 = {
+  label: 'Programming',
   data: [1, 2, 3, 5, 2, 3, 1],
   backgroundColor: [
-    '#446505'
+    'rgba(255, 0, 0, .1)'
   ],
   borderColor: [
-    '#A0E422'
+    'rgba(255, 0, 0, .5)'
   ],
   borderWidth: 1
-}];
+};
 
-data.goalData2 = [{
-  label: '# of Votes',
+data.goalData2 = {
+  label: 'Excercise',
   data: [5, 2, 3, 5, 5, 5, 0],
   backgroundColor: [
-    '#F34823'
+    'rgba(0, 255, 0, .1)'
   ],
   borderColor: [
-    '#651605'
+    'rgba(0, 255, 0, .5)'
   ],
   borderWidth: 1
-}];
+};
 
-data.goalData3 = [{
-  label: '# of Votes',
+data.goalData3 = {
+  label: 'Work',
   data: [2, 3, 1, 5, 2, 1, 1],
   backgroundColor: [
-    '#16A4DA'
+    'rgba(0, 0, 255, .1)'
   ],
   borderColor: [
-    '#075A79'
+    'rgba(0, 0, 255, .5)'
   ],
   borderWidth: 1
-}];
+};
 
-data.goalData4 = [{
-  label: '# of Votes',
+data.goalData4 = {
+  label: 'Family',
   data: [3, 1, 0, 1, 3, 4, 0],
   backgroundColor: [
-    '#9374ED'
+    'rgba(255, 0, 255, .1)'
   ],
   borderColor: [
-    '#2E0B94'
+    'rgba(255, 0, 255, .5)'
   ],
   borderWidth: 1
-}];
+};
 
-data.goalData5 = [{
-  label: '# of Votes',
+data.goalData5 = {
+  label: 'Relaxing',
   data: [3, 4, 5, 5, 1, 4, 0],
   backgroundColor: [
-    'rgba(50, 99, 132, 0.2)'
+    'rgba(50, 99, 132, 0.1)'
   ],
   borderColor: [
-    'rgba(100,99,132,1)'
+    'rgba(100,99,132,5)'
   ],
   borderWidth: 1
-}];
+};
+
 
 const ctx = document.getElementById("myChart");
 
@@ -84,7 +85,11 @@ let myChart = new Chart(ctx, {
 
 document.querySelector('.goalList').addEventListener('click', (e) => {
   const goalClicked = e.target.id;
-  const goalData = data[`goalData${goalClicked}`];
+  let goalData = [data[`goalData${goalClicked}`]];
+
+  if (`goalData${goalClicked}` === 'goalDataAll') {
+    goalData = Object.values(data);
+  }
 
   myChart = new Chart(ctx, {
     type: chartType,
