@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   res.render('index');
 });
 
-mongoose.connect(DB_URI)
+mongoose.connect(DB_URI, { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to Database...');
     app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
