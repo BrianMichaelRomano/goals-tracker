@@ -6,6 +6,11 @@ const goalSchema = new Schema({
     type: String,
     required: true,
     unique: true
+  },
+  startDate: {
+    type: Number,
+    default: Date.now(),
+    required: true
   }
 });
 
