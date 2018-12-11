@@ -1,6 +1,6 @@
 <nav class="nav">
   <div class="container">
-    <div class="nav-items">
+    <div class="nav-content">
       <a href="/">
         <h3><span class="secondary-color">Goals</span> Tracker</h3>
       </a>
@@ -9,6 +9,9 @@
         <a href="/auth/login">LOGIN</a>
         <a href="/auth/signup">SIGNUP</a>
         <a href="/charts/dashboard">CHARTS</a>
+        <form action="/auth/logout" method="POST">
+          <button type="submit">LOGOUT</button>
+        </form>
       </ul>
     </div>
   </div>

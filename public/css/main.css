@@ -65,6 +65,7 @@ form {
   padding-bottom: 15px;
 }
 
+
 .super-container {
   min-height: 100%;
   display: flex;
@@ -123,7 +124,17 @@ nav a {
   margin-right: 10px;
 }
 
-.nav-items {
+nav button {
+  padding: 0px;
+  color: rgb(161, 161, 161);
+  font-weight: 700;
+}
+
+nav form {
+  min-width: fit-content;
+}
+
+.nav-content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
