@@ -7,7 +7,7 @@ const userSchema = new Schema({
     required: true
   },
   email: {
-    type: Number,
+    type: String,
     default: Date.now(),
     required: true,
     unique: true
@@ -18,8 +18,8 @@ const userSchema = new Schema({
   },
   goals: {
     type: Array,
-    default: []
+    default: ['Programming', 'Family', 'Excercise', 'Relaxing']
   }
 });
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);
