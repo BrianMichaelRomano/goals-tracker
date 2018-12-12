@@ -6,10 +6,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongodbStore = require('connect-mongodb-session')(session);
 
-
 const User = require('./models/user.js');
-
 const rootDir = require('./util/rootDir.js');
+
+const authRoutes = require('./routes/auth.js');
+const chartRoutes = require('./routes/charts.js');
 
 const app = express();
 
@@ -29,17 +30,15 @@ const store = new MongodbStore({
   }
 );
 
+app.set('views', 'views');
+app.set('view engine', 'ejs');
+
 store.on('error', (err) => {
   console.log('Error', err);
 });
 
-const authRoutes = require('./routes/auth.js');
-const chartRoutes = require('./routes/charts.js');
-
-app.set('view engine', 'ejs');
-app.set('views', 'views');
-
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(rootDir, 'public')));
 
 app.use(session({
   secret: SESS_SECRET,
@@ -52,10 +51,23 @@ app.use(session({
   resave: false
 }));
 
+app.use((req, res, next) => {
+  if (req.session.user) {
+    User.findById({ _id: req.session.user._id })
+      .then(user => {
+        req.user = user;
+        console.log('From app.js...', user);
+        next();
+      })
+      .catch(err => console.log(err));
+  } else {
+    next();
+  }
+});
+
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);
 
-app.use(express.static(path.join(rootDir, 'public')));
 
 app.use('/', (req, res, next) => {
   res.render('index');
