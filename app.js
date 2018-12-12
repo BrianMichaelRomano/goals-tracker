@@ -2,9 +2,9 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongodbStore = require('connect-mongodb-session')(session);
-const bodyParser = require('body-parser');
 
 
 const User = require('./models/user.js');
@@ -41,20 +41,21 @@ app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/auth', authRoutes);
-app.use('/charts', chartRoutes);
-
-app.use(express.static(path.join(rootDir, 'public')));
-
 app.use(session({
   secret: SESS_SECRET,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  resave: false,
   store: store,
   cookie: {
     httpOnly: true
   },
   resave: false
 }));
+
+app.use('/auth', authRoutes);
+app.use('/charts', chartRoutes);
+
+app.use(express.static(path.join(rootDir, 'public')));
 
 app.use('/', (req, res, next) => {
   res.render('index');
