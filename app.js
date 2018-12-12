@@ -3,7 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const session = require('express-session');
+const MongodbStore = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
+
 
 const User = require('./models/user.js');
 
@@ -14,6 +16,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.DB_URI;
 const SESS_SECRET = process.env.SESS_SECRET;
+
+const store = new MongodbStore({
+  uri: DB_URI,
+  databaseName: 'goalstracker',
+  collection: 'sessions'
+},
+  function (err) {
+    if (err) {
+      console.log('Error', err);
+    }
+  }
+);
+
+store.on('error', (err) => {
+  console.log('Error', err);
+});
 
 const authRoutes = require('./routes/auth.js');
 const chartRoutes = require('./routes/charts.js');
@@ -31,11 +49,12 @@ app.use(express.static(path.join(rootDir, 'public')));
 app.use(session({
   secret: SESS_SECRET,
   saveUninitialized: true,
+  store: store,
   cookie: {
     httpOnly: true
   },
   resave: false
-}))
+}));
 
 app.use('/', (req, res, next) => {
   res.render('index');

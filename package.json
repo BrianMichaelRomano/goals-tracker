@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "^2.7.3",
+    "connect-mongodb-session": "^2.0.6",
     "dotenv": "^6.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
