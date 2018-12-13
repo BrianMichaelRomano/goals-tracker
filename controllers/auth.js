@@ -27,3 +27,12 @@ exports.postSignup = (req, res, next) => {
   console.log('Signup', req.body)
   res.redirect('login');
 };
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy((err) => {
+    if (!err) {
+      return res.redirect('login');
+    }
+    console.log(err);
+  });
+};
