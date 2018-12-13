@@ -11,8 +11,12 @@
     <main class="container">
       <h1>Welcome</h1>
       <h3>A daily <span class="secondary-color">GOALS</span> tracker for those in need of a routine.</h3>
+      <% if(!isAuthenticated) { %>
       <a href="/auth/login" class="margin-r btn">Login</a>
       <a href="/auth/signup" class="btn">Signup</a>
+      <% } else {%>
+      <a href="/charts/dashboard" class="btn">To Dashbaord</a>
+      <% } %>
     </main>
     <%- include('includes/footer.ejs') %>
   </div>
