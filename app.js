@@ -26,7 +26,6 @@ app.use(express.static(path.join(rootDir, 'public')));
 
 const store = new MongodbStore({
   uri: DB_URI,
-  databaseName: 'goalstracker',
   collection: 'sessions'
 },
   function (err) {
