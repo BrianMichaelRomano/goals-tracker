@@ -11,7 +11,7 @@ exports.postLogin = (req, res, next) => {
       if (req.body.password === user.password) {
         req.session.user = user;
         req.session.isAuthenticated = true;
-        return res.redirect('/charts/dashboard');
+        return res.redirect('/');
       }
       console.log('Information Incorrect...');
       return res.redirect('login');
