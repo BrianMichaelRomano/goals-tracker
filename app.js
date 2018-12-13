@@ -18,6 +18,12 @@ const PORT = process.env.PORT || 3000;
 const DB_URI = process.env.DB_URI;
 const SESS_SECRET = process.env.SESS_SECRET;
 
+app.set('views', 'views');
+app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(rootDir, 'public')));
+
 const store = new MongodbStore({
   uri: DB_URI,
   databaseName: 'goalstracker',
@@ -30,15 +36,9 @@ const store = new MongodbStore({
   }
 );
 
-app.set('views', 'views');
-app.set('view engine', 'ejs');
-
 store.on('error', (err) => {
   console.log('Error', err);
 });
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(rootDir, 'public')));
 
 app.use(session({
   secret: SESS_SECRET,
