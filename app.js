@@ -26,7 +26,9 @@ app.use(express.static(path.join(rootDir, 'public')));
 
 const store = new MongodbStore({
   uri: DB_URI,
-  collection: 'sessions'
+  collection: 'sessions',
+  autoRemove: 'interval',
+  autoRemoveInterval: 24 * 60 * 60 * 1000
 },
   function (err) {
     if (err) {
@@ -45,23 +47,24 @@ app.use(session({
   resave: false,
   store: store,
   cookie: {
-    httpOnly: true
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
   },
   resave: false
 }));
 
-app.use((req, res, next) => {
-  if (req.session.user) {
-    User.findById({ _id: req.session.user._id })
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  } else {
-    next();
-  }
-});
+// app.use((req, res, next) => {
+//   if (req.session.user) {
+//     User.findById({ _id: req.session.user._id })
+//       .then(user => {
+//         req.user = user;
+//         next();
+//       })
+//       .catch(err => console.log(err));
+//   } else {
+//     next();
+//   }
+// });
 
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);
