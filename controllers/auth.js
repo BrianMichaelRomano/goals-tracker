@@ -1,7 +1,7 @@
 const User = require('../models/user.js');
 
 exports.getLogin = (req, res, next) => {
-  res.render('auth/login');
+  res.render('auth/login', { isAuthenticated: req.session.isAuthenticated });
 };
 
 exports.postLogin = (req, res, next) => {
@@ -10,6 +10,7 @@ exports.postLogin = (req, res, next) => {
     .then(user => {
       if (req.body.password === user.password) {
         req.session.user = user;
+        req.session.isAuthenticated = true;
         return res.redirect('/charts/dashboard');
       }
       console.log('Information Incorrect...');
@@ -19,7 +20,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  res.render('auth/signup');
+  res.render('auth/signup', { isAuthenticated: req.session.isAuthenticated });
 };
 
 exports.postSignup = (req, res, next) => {

@@ -56,7 +56,6 @@ app.use((req, res, next) => {
     User.findById({ _id: req.session.user._id })
       .then(user => {
         req.user = user;
-        console.log('From app.js...', user);
         next();
       })
       .catch(err => console.log(err));
@@ -70,7 +69,7 @@ app.use('/charts', chartRoutes);
 
 
 app.use('/', (req, res, next) => {
-  res.render('index');
+  res.render('index', { isAuthenticated: req.session.isAuthenticated });
 });
 
 mongoose.connect(DB_URI, { useNewUrlParser: true })
