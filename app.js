@@ -53,18 +53,18 @@ app.use(session({
   resave: false
 }));
 
-// app.use((req, res, next) => {
-//   if (req.session.user) {
-//     User.findById({ _id: req.session.user._id })
-//       .then(user => {
-//         req.user = user;
-//         next();
-//       })
-//       .catch(err => console.log(err));
-//   } else {
-//     next();
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.session.user) {
+    User.findById({ _id: req.session.userId })
+      .then(user => {
+        req.user = user;
+        next();
+      })
+      .catch(err => console.log(err));
+  } else {
+    next();
+  }
+});
 
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);

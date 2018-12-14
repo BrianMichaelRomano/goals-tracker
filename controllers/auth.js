@@ -9,12 +9,15 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (req.body.password === user.password) {
-        req.session.user = user;
+        req.session.userId = user._id;
         req.session.isAuthenticated = true;
-        return res.redirect('/');
+        req.session.save(() => {
+          res.redirect('/');
+        });
+        return;
       }
       console.log('Information Incorrect...');
-      return res.redirect('login');
+      res.redirect('login');
     })
     .catch(err => console.log(err));
 };
