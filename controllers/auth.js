@@ -1,4 +1,5 @@
 const User = require('../models/user.js');
+const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', { isAuthenticated: req.session.isAuthenticated });
@@ -27,7 +28,21 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
-  console.log('Signup', req.body)
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (password === confirmPassword) {
+    const hashedPassword = bcrypt.hashSync(password, 14);
+    const newUser = new User({
+      name,
+      email,
+      hashedPassword
+    });
+    newUser.save();
+  }
+
   res.redirect('login');
 };
 

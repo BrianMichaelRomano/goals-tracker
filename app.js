@@ -77,21 +77,6 @@ app.use('/', (req, res, next) => {
 mongoose.connect(DB_URI, { useNewUrlParser: true })
   .then(() => {
 
-    return User.findOne({ email: 'brian@gmail.com' });
-  })
-  .then((user) => {
-    if (!user) {
-      const newUser = new User({
-        username: 'Brian',
-        email: 'brian@gmail.com',
-        password: 'secret'
-      });
-
-      return newUser.save()
-    }
-  })
-  .then(() => {
-
     console.log('Connected to Database...');
     app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
   })
