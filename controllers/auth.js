@@ -63,10 +63,14 @@ exports.postSignup = (req, res, next) => {
 
 };
 
+exports.getLogout = (req, res, next) => {
+  res.render('auth/logout');
+};
+
 exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     if (!err) {
-      return res.redirect('login');
+      return res.redirect('logout');
     }
     console.log(err);
   });
