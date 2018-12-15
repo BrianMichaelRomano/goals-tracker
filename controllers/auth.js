@@ -49,7 +49,7 @@ exports.postSignup = (req, res, next) => {
 
         return res.redirect('login');
       }
-      console.log('User already exists or incorret information provided...');
+      console.log('User already exists or incorrect information provided...');
       res.redirect('signup');
     })
     .catch(err => console.log(err));
