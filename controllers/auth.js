@@ -9,7 +9,7 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: req.body.email })
     .then(user => {
-      if (req.body.password === user.password) {
+      if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
         req.session.userId = user._id;
         req.session.isAuthenticated = true;
         req.session.save(() => {
@@ -28,22 +28,31 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = (req, res, next) => {
+
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
 
-  if (password === confirmPassword) {
-    const hashedPassword = bcrypt.hashSync(password, 14);
-    const newUser = new User({
-      name,
-      email,
-      hashedPassword
-    });
-    newUser.save();
-  }
+  User.findOne({ email: email })
+    .then(user => {
+      if (!user && password === confirmPassword) {
 
-  res.redirect('login');
+        const hashedPassword = bcrypt.hashSync(password, 14);
+        const newUser = new User({
+          name,
+          email,
+          hashedPassword
+        });
+        newUser.save();
+
+        return res.redirect('login');
+      }
+      console.log('User already exists or incorret information provided...');
+      res.redirect('signup');
+    })
+    .catch(err => console.log(err));
+
 };
 
 exports.postLogout = (req, res, next) => {
