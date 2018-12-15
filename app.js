@@ -5,6 +5,7 @@ const dotenv = require('dotenv').config();
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongodbStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 
 const User = require('./models/user.js');
 const rootDir = require('./util/rootDir.js');
@@ -41,6 +42,8 @@ store.on('error', (err) => {
   console.log('Error', err);
 });
 
+const csrfProtection = csrf();
+
 app.use(session({
   secret: SESS_SECRET,
   saveUninitialized: false,
@@ -52,6 +55,8 @@ app.use(session({
   },
   resave: false
 }));
+
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
   if (req.session.user) {
@@ -66,12 +71,18 @@ app.use((req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isAuthenticated;
+  res.locals.csfrToken = req.csrfToken();
+  next();
+});
+
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);
 
 
 app.use('/', (req, res, next) => {
-  res.render('index', { isAuthenticated: req.session.isAuthenticated });
+  res.render('index');
 });
 
 mongoose.connect(DB_URI, { useNewUrlParser: true })

@@ -11,6 +11,7 @@
         <% } else {%>
         <a href="/charts/dashboard">CHARTS</a>
         <form action="/auth/logout" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button type="submit">LOGOUT</button>
         </form>
         <% } %>

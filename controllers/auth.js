@@ -2,7 +2,7 @@ const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
-  res.render('auth/login', { isAuthenticated: req.session.isAuthenticated });
+  res.render('auth/login');
 };
 
 exports.postLogin = (req, res, next) => {
@@ -13,7 +13,9 @@ exports.postLogin = (req, res, next) => {
         req.session.userId = user._id;
         req.session.isAuthenticated = true;
         req.session.save(err => {
-          console.log(err);
+          if (err) {
+            console.log(err);
+          }
           res.redirect('/');
         });
         return;
@@ -25,7 +27,7 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  res.render('auth/signup', { isAuthenticated: req.session.isAuthenticated });
+  res.render('auth/signup');
 };
 
 exports.postSignup = (req, res, next) => {
