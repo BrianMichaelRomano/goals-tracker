@@ -1,0 +1,10 @@
+<% if(messages.messages)  { %>
+
+<% messages.messages.forEach(message => { %>
+<div class="message-box <%= messages.classes %>">
+  <p>
+    <%= message %>
+  </p>
+</div>
+<% }) %>
+<% } %>

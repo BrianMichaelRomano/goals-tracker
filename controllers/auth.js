@@ -9,18 +9,23 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: req.body.email })
     .then(user => {
-      if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
-        req.session.userId = user._id;
-        req.session.isAuthenticated = true;
-        req.session.save(err => {
-          if (err) {
-            console.log(err);
-          }
-          res.redirect('/');
-        });
-        return;
+      if (user) {
+        if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
+          req.session.userId = user._id;
+          req.session.isAuthenticated = true;
+          req.session.save(err => {
+            if (err) {
+              console.log(err);
+            }
+            req.flash('messages', 'Successfully logged in...');
+            req.flash('classes', 'success');
+            res.redirect('/');
+          });
+          return;
+        }
       }
-      console.log('Information Incorrect or User does not exist...');
+      req.flash('messages', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
+      req.flash('classes', 'warning');
       res.redirect('login');
     })
     .catch(err => console.log(err));
@@ -51,7 +56,7 @@ exports.postSignup = (req, res, next) => {
 
         return res.redirect('login');
       }
-      console.log('User already exists or incorrect information provided...');
+      req.flash('errors', 'User with that email already exists or passwords fields do not match...');
       res.redirect('signup');
     })
     .catch(err => console.log(err));

@@ -53,6 +53,32 @@ form {
   color: rgb(21, 156, 66);
 }
 
+.warning {
+  border: 1px solid rgb(214, 77, 77);
+  background-color: rgba(202, 118, 118, 0.637);
+}
+
+.success {
+  border: 1px solid rgb(77, 214, 77);
+  background-color: rgba(118, 202, 125, 0.637);
+}
+
+.inform {
+  border: 1px solid rgb(214, 205, 77);
+  background-color: rgba(201, 202, 118, 0.637);
+}
+
+.message-box {
+  padding: 0px 20px;
+  border-radius: 10px;
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.message-box p {
+  margin: 10px 0px;
+}
+
 .form-container {
   display: flex;
   align-items: center;

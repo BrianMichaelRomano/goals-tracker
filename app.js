@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongodbStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
+const flash = require('express-flash');
 
 const User = require('./models/user.js');
 const rootDir = require('./util/rootDir.js');
@@ -77,6 +78,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(flash());
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);
 
