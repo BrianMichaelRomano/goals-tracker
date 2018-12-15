@@ -12,12 +12,13 @@ exports.postLogin = (req, res, next) => {
       if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
         req.session.userId = user._id;
         req.session.isAuthenticated = true;
-        req.session.save(() => {
+        req.session.save(err => {
+          console.log(err);
           res.redirect('/');
         });
         return;
       }
-      console.log('Information Incorrect...');
+      console.log('Information Incorrect or User does not exist...');
       res.redirect('login');
     })
     .catch(err => console.log(err));
