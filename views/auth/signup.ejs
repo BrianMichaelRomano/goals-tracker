@@ -11,7 +11,7 @@
     <main class="container">
       <div class="form-container">
         <form action="/auth/signup" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
           <h1>Sign Up</h1>
           <div class="form-group">
             <label for="name">Name</label>
