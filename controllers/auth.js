@@ -1,5 +1,6 @@
 const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
+const sgMail = require('@sendgrid/mail');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login');
@@ -54,11 +55,19 @@ exports.postSignup = (req, res, next) => {
         });
         newUser.save();
 
-        req.flash('messages', 'You have signed up successfully, please log in...');
+        sgMail.setApiKey(process.env.SENDGRID_KEY);
+        const msg = {
+          to: email,
+          from: 'support@goalstracker.com',
+          subject: 'Your signed up!',
+          html: '<h1>Your are now signed up, just log in!</h1>'
+        };
+        sgMail.send(msg);
+
+        req.flash('messages', 'You have signed up successfully, please check your email for account verification...');
         req.flash('classes', 'success');
         return res.redirect('login');
       }
-      console.log('error');
       req.flash('messages', 'User with that email already exists or passwords fields do not match...');
       req.flash('classes', 'warning');
       res.redirect('signup');
