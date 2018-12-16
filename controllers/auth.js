@@ -1,6 +1,7 @@
 const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
+const crypto = require('crypto');
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login');
@@ -86,5 +87,58 @@ exports.postLogout = (req, res, next) => {
       return res.redirect('logout');
     }
     console.log(err);
+  });
+};
+
+exports.getResetPassword = (req, res, next) => {
+  res.render('auth/resetpassword');
+};
+
+exports.postResetPassword = (req, res, next) => {
+  let userEmail = req.body.email;
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+      return res.redirect('resetpassword');
+    }
+
+    const resetToken = buffer.toString('hex');
+    User.findOne({ email: userEmail })
+      .then(user => {
+        if (!user) {
+          userEmail = null;
+          req.flash('messages', 'User with that password does not exist...');
+          req.flash('classes', 'warning');
+          return res.redirect('/auth/resetpassword');
+        }
+        user.resetToken = resetToken;
+        user.resetTokenExpiration = 360000;
+        return user.save();
+      })
+      .then(() => {
+        if (userEmail) {
+
+          sgMail.setApiKey(process.env.SENDGRID_KEY);
+          const msg = {
+            to: req.body.email,
+            from: 'support@goalstracker.com',
+            subject: 'Password Reset',
+            html: `
+            <h1>Goals Tracker Reset Password!</h1>
+            <P>
+            If you did not request a password reset, please head to Goals Tracker website and request a password reset and update your password.
+            If you did request a password reset please click reset link below.
+            </p>
+            <a href="http://localhost:5000/auth/resetpassword/${resetToken}">Password Reset</a>
+            `
+          };
+          sgMail.send(msg);
+
+          req.flash('messages', 'Your password reset email has been sent, please check in your spam box if not shown in your inbox...');
+          req.flash('classes', 'inform');
+          res.redirect('/auth/login');
+        }
+      })
+      .catch(err => console.log(err));
   });
 };

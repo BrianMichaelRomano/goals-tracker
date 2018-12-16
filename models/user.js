@@ -16,6 +16,8 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  resetToken: String,
+  resetTokenExpiration: String,
   goals: {
     type: Array,
     default: ['Programming', 'Family', 'Excercise', 'Relaxing']

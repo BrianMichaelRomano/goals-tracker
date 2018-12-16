@@ -54,18 +54,18 @@ form {
 }
 
 .warning {
-  border: 1px solid rgb(214, 77, 77);
-  background-color: rgba(202, 118, 118, 0.637);
+  border: 1px solid rgba(129, 58, 58, 0.637);
+  background-color: rgba(223, 162, 162, 0.637);
 }
 
 .success {
-  border: 1px solid rgb(77, 214, 77);
-  background-color: rgba(118, 202, 125, 0.637);
+  border: 1px solid rgba(118, 202, 125, 0.637);
+  background-color: rgba(190, 252, 195, 0.637);
 }
 
 .inform {
-  border: 1px solid rgb(214, 205, 77);
-  background-color: rgba(201, 202, 118, 0.637);
+  border: 1px solid rgb(194, 187, 92);
+  background-color: rgb(243, 236, 141);
 }
 
 .message-box {
@@ -84,6 +84,11 @@ form {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.form-container a {
+  text-align: center;
+  margin: 10px;
 }
 
 .form-group {
