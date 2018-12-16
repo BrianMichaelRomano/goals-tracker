@@ -54,9 +54,13 @@ exports.postSignup = (req, res, next) => {
         });
         newUser.save();
 
+        req.flash('messages', 'You have signed up successfully, please log in...');
+        req.flash('classes', 'success');
         return res.redirect('login');
       }
-      req.flash('errors', 'User with that email already exists or passwords fields do not match...');
+      console.log('error');
+      req.flash('messages', 'User with that email already exists or passwords fields do not match...');
+      req.flash('classes', 'warning');
       res.redirect('signup');
     })
     .catch(err => console.log(err));
