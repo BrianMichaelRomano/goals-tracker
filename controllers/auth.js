@@ -82,7 +82,7 @@ exports.postSignup = (req, res, next) => {
           return res.redirect('login');
         }
 
-        req.flash('messages', 'Suomthing went wrong saving user, please contact support...');
+        req.flash('messages', 'Something went wrong saving user, please contact support...');
         req.flash('classes', 'warning');
         res.redirect('login');
       });
@@ -125,7 +125,6 @@ exports.postResetPassword = (req, res, next) => {
           req.flash('classes', 'warning');
           return res.redirect('/auth/reset-password');
         }
-        console.log('User found, saving....');
         user.resetToken = resetToken;
         user.resetTokenExpiration = Date.now() + 360000;
         return user.save();
@@ -151,7 +150,7 @@ exports.postResetPassword = (req, res, next) => {
 
           req.flash('messages', 'Your password reset email has been sent, please check in your spam box if not shown in your inbox...');
           req.flash('classes', 'inform');
-          res.redirect('/auth/login');
+          res.redirect('/');
         }
       })
       .catch(err => console.log(err));
@@ -176,10 +175,16 @@ exports.postNewPassword = (req, res, next) => {
       .then(user => {
         const hashedPassword = bcrypt.hashSync(password, 14);
         user.hashedPassword = hashedPassword;
-        return user.save();
-      })
-      .then(() => {
-        res.redirect('login');
+        user.save((err) => {
+          if (!err) {
+            req.flash('messages', 'Your password has been reset, you may now log in with new password...');
+            req.flash('classes', 'success');
+            return res.redirect('login');
+          }
+          req.flash('messages', 'Something went wrong updating password, please contact support...');
+          req.flash('classes', 'warning');
+          res.redirect('login');
+        });
       })
       .catch(err => console.log(err));
   }
