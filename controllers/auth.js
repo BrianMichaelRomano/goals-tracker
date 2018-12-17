@@ -91,15 +91,16 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
-  res.render('auth/resetpassword');
+  res.render('auth/reset-password');
 };
 
 exports.postResetPassword = (req, res, next) => {
   let userEmail = req.body.email;
+
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       console.log(err);
-      return res.redirect('resetpassword');
+      return res.redirect('reset-password');
     }
 
     const resetToken = buffer.toString('hex');
@@ -109,10 +110,11 @@ exports.postResetPassword = (req, res, next) => {
           userEmail = null;
           req.flash('messages', 'User with that password does not exist...');
           req.flash('classes', 'warning');
-          return res.redirect('/auth/resetpassword');
+          return res.redirect('/auth/reset-password');
         }
+        console.log('User found, saving....');
         user.resetToken = resetToken;
-        user.resetTokenExpiration = 360000;
+        user.resetTokenExpiration = Date.now() + 360000;
         return user.save();
       })
       .then(() => {
@@ -129,7 +131,7 @@ exports.postResetPassword = (req, res, next) => {
             If you did not request a password reset, please head to Goals Tracker website and request a password reset and update your password.
             If you did request a password reset please click reset link below.
             </p>
-            <a href="http://localhost:5000/auth/resetpassword/${resetToken}">Password Reset</a>
+            <a href="http://localhost:5000/auth/new-password/${resetToken}">Password Reset</a>
             `
           };
           sgMail.send(msg);
@@ -141,4 +143,31 @@ exports.postResetPassword = (req, res, next) => {
       })
       .catch(err => console.log(err));
   });
+};
+
+exports.getNewPassword = (req, res, next) => {
+  const token = req.params.token;
+  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+    .then(user => {
+      res.render('auth/new-password', { userId: user._id.toString() });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postNewPassword = (req, res, next) => {
+  const password = req.body.password;
+  const confirmPassword = req.body.confirmPassword;
+
+  if (password === confirmPassword) {
+    User.findOne({ _id: req.body.userId })
+      .then(user => {
+        const hashedPassword = bcrypt.hashSync(password, 14);
+        user.hashedPassword = hashedPassword;
+        return user.save();
+      })
+      .then(() => {
+        res.redirect('login');
+      })
+      .catch(err => console.log(err));
+  }
 };
