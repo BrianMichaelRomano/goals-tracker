@@ -43,22 +43,35 @@ exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
+  let sendMail = false;
 
   User.findOne({ email: email })
     .then(user => {
-      if (!user && password === confirmPassword) {
+      if (user) {
+        req.flash('messages', 'User with that email already exists...');
+        req.flash('classes', 'warning');
+        return res.redirect('signup');
+      } else if (password !== confirmPassword) {
+        req.flash('messages', 'Passwords do not match...');
+        req.flash('classes', 'warning');
+        return res.redirect('signup');
+      }
 
-        const hashedPassword = bcrypt.hashSync(password, 14);
-        const newUser = new User({
-          name,
-          email,
-          hashedPassword
-        });
-        newUser.save();
-
+      sendMail = true;
+      const hashedPassword = bcrypt.hashSync(password, 14);
+      const newUser = new User({
+        name,
+        email,
+        hashedPassword
+      });
+      return newUser.save();
+    })
+    .then(result => {
+      console.log(result);
+      if (sendMail) {
         sgMail.setApiKey(process.env.SENDGRID_KEY);
         const msg = {
-          to: email,
+          to: req.body.email,
           from: 'support@goalstracker.com',
           subject: 'Your signed up!',
           html: '<h1>Your are now signed up, just log in!</h1>'
@@ -67,14 +80,10 @@ exports.postSignup = (req, res, next) => {
 
         req.flash('messages', 'You have signed up successfully, please check your email for account verification...');
         req.flash('classes', 'success');
-        return res.redirect('login');
+        res.redirect('login');
       }
-      req.flash('messages', 'User with that email already exists or passwords fields do not match...');
-      req.flash('classes', 'warning');
-      res.redirect('signup');
     })
     .catch(err => console.log(err));
-
 };
 
 exports.getLogout = (req, res, next) => {
