@@ -57,31 +57,35 @@ exports.postSignup = (req, res, next) => {
         return res.redirect('signup');
       }
 
-      sendMail = true;
       const hashedPassword = bcrypt.hashSync(password, 14);
       const newUser = new User({
         name,
         email,
         hashedPassword
       });
-      return newUser.save();
-    })
-    .then(result => {
-      console.log(result);
-      if (sendMail) {
-        sgMail.setApiKey(process.env.SENDGRID_KEY);
-        const msg = {
-          to: req.body.email,
-          from: 'support@goalstracker.com',
-          subject: 'Your signed up!',
-          html: '<h1>Your are now signed up, just log in!</h1>'
-        };
-        sgMail.send(msg);
 
-        req.flash('messages', 'You have signed up successfully, please check your email for account verification...');
-        req.flash('classes', 'success');
+      sendMail = true;
+
+      newUser.save(err => {
+        if (sendMail && !err) {
+          sgMail.setApiKey(process.env.SENDGRID_KEY);
+          const msg = {
+            to: req.body.email,
+            from: 'support@goalstracker.com',
+            subject: 'Your signed up!',
+            html: '<h1>Your are now signed up, just log in!</h1>'
+          };
+          sgMail.send(msg);
+
+          req.flash('messages', 'You have signed up successfully, please check your email for account verification...');
+          req.flash('classes', 'success');
+          return res.redirect('login');
+        }
+
+        req.flash('messages', 'Suomthing went wrong saving user, please contact support...');
+        req.flash('classes', 'warning');
         res.redirect('login');
-      }
+      });
     })
     .catch(err => console.log(err));
 };
