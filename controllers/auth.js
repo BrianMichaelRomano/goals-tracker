@@ -159,7 +159,7 @@ exports.postNewPassword = (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
 
   if (password === confirmPassword) {
-    User.findOne({ _id: req.body.userId })
+    User.findOne({ _id: req.body.userId, resetTokenExpiration: { $gt: Date.now() } })
       .then(user => {
         const hashedPassword = bcrypt.hashSync(password, 14);
         user.hashedPassword = hashedPassword;
