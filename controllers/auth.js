@@ -18,18 +18,18 @@ exports.postLogin = (req, res, next) => {
         if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
           req.session.userId = user._id;
           req.session.isAuthenticated = true;
-          req.session.save(err => {
-            if (err) {
-              console.log(err);
-            }
+          req.session.save(() => {
             req.flash('success', 'Successfully logged in...');
             res.redirect('/');
           });
-          return;
         }
+        return;
       }
       req.flash('error', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
-      res.redirect('login');
+      req.session.save(() => {
+        res.redirect('login');
+      });
+      return;
     })
     .catch(err => console.log(err));
 };
@@ -53,10 +53,16 @@ exports.postSignup = (req, res, next) => {
     .then(user => {
       if (user) {
         req.flash('error', 'User with that email already exists...');
-        return res.redirect('signup');
+        req.session.save(() => {
+          res.redirect('signup');
+        });
+        return;
       } else if (password !== confirmPassword) {
         req.flash('error', 'Passwords do not match...');
-        return res.redirect('signup');
+        req.session.save(() => {
+          res.redirect('signup');
+        });
+        return;
       }
 
       const hashedPassword = bcrypt.hashSync(password, 14);
@@ -78,13 +84,17 @@ exports.postSignup = (req, res, next) => {
             html: '<h1>Your are now signed up, just log in!</h1>'
           };
           sgMail.send(msg);
-
           req.flash('success', 'You have signed up successfully...');
-          return res.redirect('login');
+          req.session.save(() => {
+            res.redirect('login');
+          });
+          return;
         }
 
         req.flash('error', 'Something went wrong saving user, please contact support...');
-        res.redirect('login');
+        req.session.save(() => {
+          res.redirect('login');
+        });
       });
     })
     .catch(err => console.log(err));
@@ -125,7 +135,10 @@ exports.postResetPassword = (req, res, next) => {
         if (!user) {
           userEmail = null;
           req.flash('error', 'User with that password does not exist...');
-          return res.redirect('/auth/reset-password');
+          req.session.save(() => {
+            res.redirect('/auth/reset-password');
+          });
+          return;
         }
         user.resetToken = resetToken;
         user.resetTokenExpiration = Date.now() + 360000;
@@ -149,9 +162,10 @@ exports.postResetPassword = (req, res, next) => {
             `
           };
           sgMail.send(msg);
-
           req.flash('success', 'Your password reset email has been sent, please check in your spam box if not shown in your inbox...');
-          res.redirect('/');
+          req.session.save(() => {
+            res.redirect('/');
+          });
         }
       })
       .catch(err => console.log(err));
@@ -163,6 +177,7 @@ exports.getNewPassword = (req, res, next) => {
   User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
     .then(user => {
       res.render('auth/new-password', {
+        token: token,
         userId: user._id.toString(),
         errorMessage: req.flash('error'),
         successMessage: req.flash('success')
@@ -183,14 +198,28 @@ exports.postNewPassword = (req, res, next) => {
         user.save((err) => {
           if (!err) {
             req.flash('success', 'Your password has been reset, you may now log in with new password...');
-            return res.redirect('login');
+            req.session.save(() => {
+              res.redirect('login');
+            });
+            return;
           }
           req.flash('error', 'Something went wrong updating password, please contact support...');
-          return res.redirect('login');
+          req.session.save(() => {
+            res.redirect('login');
+          });
+          return;
         });
       })
       .catch(err => console.log(err));
+  } else {
+    req.flash('error', 'Passwords do not...');
+    req.session.save(() => {
+      res.render(`auth/new-password`, {
+        token: req.body.token,
+        userId: req.body.userId,
+        errorMessage: req.flash('error'),
+        successMessage: req.flash('success')
+      });
+    });
   }
-  req.flash('error', 'Passwords do not...');
-  return res.redirect('login');
 };
