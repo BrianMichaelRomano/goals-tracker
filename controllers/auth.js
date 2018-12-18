@@ -79,7 +79,7 @@ exports.postSignup = (req, res, next) => {
           };
           sgMail.send(msg);
 
-          req.flash('success', 'You have signed up successfully, please check your email for account verification...');
+          req.flash('success', 'You have signed up successfully...');
           return res.redirect('login');
         }
 
