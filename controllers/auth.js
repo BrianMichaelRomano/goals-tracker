@@ -4,7 +4,10 @@ const sgMail = require('@sendgrid/mail');
 const crypto = require('crypto');
 
 exports.getLogin = (req, res, next) => {
-  res.render('auth/login');
+  res.render('auth/login', {
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
 };
 
 exports.postLogin = (req, res, next) => {
@@ -19,22 +22,23 @@ exports.postLogin = (req, res, next) => {
             if (err) {
               console.log(err);
             }
-            req.flash('messages', 'Successfully logged in...');
-            req.flash('classes', 'success');
+            req.flash('success', 'Successfully logged in...');
             res.redirect('/');
           });
           return;
         }
       }
-      req.flash('messages', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
-      req.flash('classes', 'warning');
+      req.flash('error', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
       res.redirect('login');
     })
     .catch(err => console.log(err));
 };
 
 exports.getSignup = (req, res, next) => {
-  res.render('auth/signup');
+  res.render('auth/signup', {
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
 };
 
 exports.postSignup = (req, res, next) => {
@@ -48,12 +52,10 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then(user => {
       if (user) {
-        req.flash('messages', 'User with that email already exists...');
-        req.flash('classes', 'warning');
+        req.flash('error', 'User with that email already exists...');
         return res.redirect('signup');
       } else if (password !== confirmPassword) {
-        req.flash('messages', 'Passwords do not match...');
-        req.flash('classes', 'warning');
+        req.flash('error', 'Passwords do not match...');
         return res.redirect('signup');
       }
 
@@ -77,13 +79,11 @@ exports.postSignup = (req, res, next) => {
           };
           sgMail.send(msg);
 
-          req.flash('messages', 'You have signed up successfully, please check your email for account verification...');
-          req.flash('classes', 'success');
+          req.flash('success', 'You have signed up successfully, please check your email for account verification...');
           return res.redirect('login');
         }
 
-        req.flash('messages', 'Something went wrong saving user, please contact support...');
-        req.flash('classes', 'warning');
+        req.flash('error', 'Something went wrong saving user, please contact support...');
         res.redirect('login');
       });
     })
@@ -104,7 +104,10 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.getResetPassword = (req, res, next) => {
-  res.render('auth/reset-password');
+  res.render('auth/reset-password', {
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
 };
 
 exports.postResetPassword = (req, res, next) => {
@@ -121,8 +124,7 @@ exports.postResetPassword = (req, res, next) => {
       .then(user => {
         if (!user) {
           userEmail = null;
-          req.flash('messages', 'User with that password does not exist...');
-          req.flash('classes', 'warning');
+          req.flash('error', 'User with that password does not exist...');
           return res.redirect('/auth/reset-password');
         }
         user.resetToken = resetToken;
@@ -148,8 +150,7 @@ exports.postResetPassword = (req, res, next) => {
           };
           sgMail.send(msg);
 
-          req.flash('messages', 'Your password reset email has been sent, please check in your spam box if not shown in your inbox...');
-          req.flash('classes', 'inform');
+          req.flash('success', 'Your password reset email has been sent, please check in your spam box if not shown in your inbox...');
           res.redirect('/');
         }
       })
@@ -161,7 +162,11 @@ exports.getNewPassword = (req, res, next) => {
   const token = req.params.token;
   User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
     .then(user => {
-      res.render('auth/new-password', { userId: user._id.toString() });
+      res.render('auth/new-password', {
+        userId: user._id.toString(),
+        errorMessage: req.flash('error'),
+        successMessage: req.flash('success')
+      });
     })
     .catch(err => console.log(err));
 };
@@ -177,15 +182,15 @@ exports.postNewPassword = (req, res, next) => {
         user.hashedPassword = hashedPassword;
         user.save((err) => {
           if (!err) {
-            req.flash('messages', 'Your password has been reset, you may now log in with new password...');
-            req.flash('classes', 'success');
+            req.flash('success', 'Your password has been reset, you may now log in with new password...');
             return res.redirect('login');
           }
-          req.flash('messages', 'Something went wrong updating password, please contact support...');
-          req.flash('classes', 'warning');
-          res.redirect('login');
+          req.flash('error', 'Something went wrong updating password, please contact support...');
+          return res.redirect('login');
         });
       })
       .catch(err => console.log(err));
   }
+  req.flash('error', 'Passwords do not...');
+  return res.redirect('login');
 };

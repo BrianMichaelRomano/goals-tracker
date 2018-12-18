@@ -84,7 +84,10 @@ app.use('/charts', chartRoutes);
 
 
 app.use('/', (req, res, next) => {
-  res.render('index');
+  res.render('index', {
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
 });
 
 mongoose.connect(DB_URI, { useNewUrlParser: true })
