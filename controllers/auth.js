@@ -48,61 +48,37 @@ exports.postSignup = (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
-  let sendMail = false;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    // req.flash('error', 'Something went wrong saving user, please contact support...');
-    req.session.save(() => {
-      res.status(422).render('auth/signup', {
-        errorMessage: errors.array()[0].msg,
-        successMessage: req.flash('success')
-      });
+    res.status(422).render('auth/signup', {
+      errorMessage: errors.array()[0].msg,
+      successMessage: req.flash('success')
     });
     return;
   }
 
-  User.findOne({ email: email })
-    .then(user => {
-      if (user) {
-        req.flash('error', 'User with that email already exists...');
-        req.session.save(() => {
-          res.redirect('signup');
-        });
-        return;
-      }
-
-      const hashedPassword = bcrypt.hashSync(password, 14);
+  bcrypt.hash(password, 14)
+    .then((hashedPassword) => {
       const newUser = new User({
         name,
         email,
         hashedPassword
       });
-
-      sendMail = true;
-
-      newUser.save(err => {
-        if (sendMail && !err) {
-          sgMail.setApiKey(process.env.SENDGRID_KEY);
-          const msg = {
-            to: req.body.email,
-            from: 'support@goalstracker.com',
-            subject: 'Your signed up!',
-            html: '<h1>Your are now signed up, just log in!</h1>'
-          };
-          sgMail.send(msg);
-          req.flash('success', 'You have signed up successfully...');
-          req.session.save(() => {
-            res.redirect('login');
-          });
-          return;
-        }
-
-        req.flash('error', 'Something went wrong saving user, please contact support...');
-        req.session.save(() => {
-          res.redirect('login');
-        });
+      return newUser.save();
+    })
+    .then(() => {
+      sgMail.setApiKey(process.env.SENDGRID_KEY);
+      const msg = {
+        to: req.body.email,
+        from: 'support@goalstracker.com',
+        subject: 'Your signed up!',
+        html: '<h1>Your are now signed up, just log in!</h1>'
+      };
+      sgMail.send(msg);
+      req.flash('success', 'You have signed up successfully...');
+      req.session.save(() => {
+        res.redirect('login');
       });
     })
     .catch(err => console.log(err));
