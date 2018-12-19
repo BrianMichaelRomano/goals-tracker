@@ -2,6 +2,8 @@ const User = require('../models/user.js');
 const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
 const crypto = require('crypto');
+const { validationResult } = require('express-validator/check');
+
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -48,17 +50,23 @@ exports.postSignup = (req, res, next) => {
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
   let sendMail = false;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    // req.flash('error', 'Something went wrong saving user, please contact support...');
+    req.session.save(() => {
+      res.status(422).render('auth/signup', {
+        errorMessage: errors.array()[0].msg,
+        successMessage: req.flash('success')
+      });
+    });
+    return;
+  }
 
   User.findOne({ email: email })
     .then(user => {
       if (user) {
         req.flash('error', 'User with that email already exists...');
-        req.session.save(() => {
-          res.redirect('signup');
-        });
-        return;
-      } else if (password !== confirmPassword) {
-        req.flash('error', 'Passwords do not match...');
         req.session.save(() => {
           res.redirect('signup');
         });

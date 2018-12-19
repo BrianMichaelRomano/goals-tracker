@@ -11,7 +11,7 @@
     <main class="container">
       <%- include('../includes/messages.ejs') %>
       <div class="form-container">
-        <form action="/auth/signup" method="POST">
+        <form action="/auth/signup" method="POST" novalidate>
           <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
           <h1>Sign Up</h1>
           <div class="form-group">
