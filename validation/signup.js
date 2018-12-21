@@ -14,10 +14,12 @@ module.exports = [
           }
         })
         .catch(err => console.log(err));
-    }),
+    })
+    .normalizeEmail(),
   body('password', 'Password must be 6 to 14 characters long and use numbers and text only...')
     .isLength({ min: 6, max: 14 })
-    .isAlphanumeric(),
+    .isAlphanumeric()
+    .trim(),
   body('confirmPassword')
     .custom((value, { req }) => {
       if (value !== req.body.password) {
@@ -25,4 +27,5 @@ module.exports = [
       }
       return true;
     })
+    .trim()
 ];
