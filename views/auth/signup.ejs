@@ -16,19 +16,23 @@
           <h1>Sign Up</h1>
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="name" name="name" id="name" placeholder="Enter name...">
+            <input class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>" type="name" name="name"
+              id="name" value="<%= name %>">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter email...">
+            <input class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email" name="email"
+              id="email" value="<%= email %>">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Enter password...">
+            <input class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" type="password"
+              name="password" id="password" value="<%= password %>">
           </div>
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Enter password again...">
+            <input class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>" type="password"
+              name="confirmPassword" id="confirmPassword" value="<%= confirmPassword %>">
           </div>
           <button type="submit">Sign up</button>
         </form>

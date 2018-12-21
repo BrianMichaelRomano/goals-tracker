@@ -53,6 +53,7 @@ form {
   color: rgb(21, 156, 66);
 }
 
+
 .warning {
   border: 1px solid rgba(129, 58, 58, 0.637);
   background-color: rgba(223, 162, 162, 0.637);
@@ -97,6 +98,9 @@ form {
   padding-bottom: 15px;
 }
 
+input.invalid {
+  border: 1px solid red;
+}
 
 .super-container {
   min-height: 100%;

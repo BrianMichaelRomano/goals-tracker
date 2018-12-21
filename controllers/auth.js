@@ -39,7 +39,12 @@ exports.postLogin = (req, res, next) => {
 exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     errorMessage: req.flash('error'),
-    successMessage: req.flash('success')
+    successMessage: req.flash('success'),
+    password: '',
+    confirmPassword: '',
+    email: '',
+    name: '',
+    validationErrors: []
   });
 };
 
@@ -53,7 +58,12 @@ exports.postSignup = (req, res, next) => {
   if (!errors.isEmpty()) {
     res.status(422).render('auth/signup', {
       errorMessage: errors.array()[0].msg,
-      successMessage: req.flash('success')
+      successMessage: req.flash('success'),
+      password: password,
+      confirmPassword: req.body.confirmPassword,
+      email: email,
+      name: name,
+      validationErrors: errors.array()
     });
     return;
   }
