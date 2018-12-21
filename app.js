@@ -71,9 +71,7 @@ app.use((req, res, next) => {
       req.user = user;
       next();
     })
-    .catch(err => {
-      throw new Error(err);
-    });
+    .catch(err => console.log(err));
 });
 
 app.use((req, res, next) => {
