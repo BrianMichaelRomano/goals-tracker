@@ -60,16 +60,20 @@ app.use(session({
 app.use(csrfProtection);
 
 app.use((req, res, next) => {
-  if (req.session.user) {
-    User.findById({ _id: req.session.userId })
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
-  } else {
-    next();
+  if (!req.session.user) {
+    return next();
   }
+  User.findById({ _id: req.session.userId })
+    .then(user => {
+      if (!user) {
+        next();
+      }
+      req.user = user;
+      next();
+    })
+    .catch(err => {
+      throw new Error(err);
+    });
 });
 
 app.use((req, res, next) => {
