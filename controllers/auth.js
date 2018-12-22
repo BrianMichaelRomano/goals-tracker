@@ -51,11 +51,25 @@ exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const avatar = req.file;
+  const setAvatar = req.body.setAvatar;
   const errors = validationResult(req);
 
-  console.log(avatar);
+  if (!avatar && !setAvatar) {
+    return res.status(422).render('auth/signup', {
+      errorMessage: 'Click checkbox if you do not wish to set you avatar image at this time, image must be .jpg .jpeg or .png...',
+      successMessage: req.flash('success'),
+      password: password,
+      confirmPassword: req.body.confirmPassword,
+      email: email,
+      name: name,
+      validationErrors: errors.array()
+    });
+  }
+
+  console.log('Avatar', avatar);
+  console.log('Body', req.body);
   if (!errors.isEmpty()) {
-    res.status(422).render('auth/signup', {
+    return res.status(422).render('auth/signup', {
       errorMessage: errors.array()[0].msg,
       successMessage: req.flash('success'),
       password: password,
@@ -64,7 +78,6 @@ exports.postSignup = (req, res, next) => {
       name: name,
       validationErrors: errors.array()
     });
-    return;
   }
 
   bcrypt.hash(password, 14)
