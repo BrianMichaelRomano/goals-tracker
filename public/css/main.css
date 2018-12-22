@@ -49,6 +49,10 @@ form {
   height: 100%;
 }
 
+img.avatar {
+  max-width: 200px;
+}
+
 .secondary-color {
   color: rgb(21, 156, 66);
 }

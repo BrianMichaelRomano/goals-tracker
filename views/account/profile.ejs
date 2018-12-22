@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../includes/header.ejs') %>
+</head>
+
+<body>
+  <div class="super-container">
+    <%- include('../includes/nav.ejs') %>
+    <main class="container">
+      <%- include('../includes/messages.ejs') %>
+      <h1>
+        <%= name %>
+      </h1>
+      <img class="avatar" src="/<%= avatarPath %>" alt="User Avatar">
+    </main>
+    <%- include('../includes/footer.ejs') %>
+  </div>
+</body>
+
+</html>

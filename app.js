@@ -14,6 +14,7 @@ const rootDir = require('./util/rootDir.js');
 
 const authRoutes = require('./routes/auth.js');
 const chartRoutes = require('./routes/charts.js');
+const accountRoutes = require('./routes/account.js');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, 'public')));
+app.use('/images', express.static(path.join(rootDir, 'images')));
 
 const store = new MongodbStore({
   uri: DB_URI,
@@ -60,7 +62,7 @@ app.use(session({
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads');
+    cb(null, 'images');
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -80,7 +82,7 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('avatar'
 app.use(csrfProtection);
 
 app.use((req, res, next) => {
-  if (!req.session.user) {
+  if (!req.session.userId) {
     return next();
   }
   User.findById({ _id: req.session.userId })
@@ -103,6 +105,7 @@ app.use((req, res, next) => {
 app.use(flash());
 app.use('/auth', authRoutes);
 app.use('/charts', chartRoutes);
+app.use('/account', accountRoutes);
 
 
 app.use('/', (req, res, next) => {
