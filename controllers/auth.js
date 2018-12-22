@@ -16,22 +16,19 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: req.body.email })
     .then(user => {
-      if (user) {
-        if (bcrypt.compareSync(req.body.password, user.hashedPassword)) {
-          req.session.userId = user._id;
-          req.session.isAuthenticated = true;
-          req.session.save(() => {
-            req.flash('success', 'Successfully logged in...');
-            res.redirect('/');
-          });
-        }
-        return;
+      if (!user || !bcrypt.compareSync(req.body.password, user.hashedPassword)) {
+        req.flash('error', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
+        req.session.save(() => {
+          res.redirect('login');
+        });
+      } else {
+        req.session.userId = user._id;
+        req.session.isAuthenticated = true;
+        req.session.save(() => {
+          req.flash('success', 'Successfully logged in...');
+          res.redirect('/');
+        });
       }
-      req.flash('error', 'Information Incorrect or User does not exist, please re-enter information or sign up...');
-      req.session.save(() => {
-        res.redirect('login');
-      });
-      return;
     })
     .catch(err => console.log(err));
 };
@@ -53,8 +50,10 @@ exports.postSignup = (req, res, next) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+  const avatar = req.file;
   const errors = validationResult(req);
 
+  console.log(avatar);
   if (!errors.isEmpty()) {
     res.status(422).render('auth/signup', {
       errorMessage: errors.array()[0].msg,
