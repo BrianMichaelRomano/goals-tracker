@@ -20,6 +20,11 @@
               id="name" value="<%= name %>">
           </div>
           <div class="form-group">
+            <label for="avatar">Avatar Picture</label>
+            <input type="file" name="avatar" id="avatar">
+            <small>You can set/change this later in account settings...</small>
+          </div>
+          <div class="form-group">
             <label for="email">Email</label>
             <input class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email" name="email"
               id="email" value="<%= email %>">
