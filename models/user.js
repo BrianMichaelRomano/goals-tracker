@@ -21,6 +21,9 @@ const userSchema = new Schema({
   goals: {
     type: Array,
     default: ['Programming', 'Family', 'Excercise', 'Relaxing']
+  },
+  avatar: {
+    type: String
   }
 });
 

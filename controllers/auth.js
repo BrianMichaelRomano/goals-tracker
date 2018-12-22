@@ -53,6 +53,7 @@ exports.postSignup = (req, res, next) => {
   const avatar = req.file;
   const setAvatar = req.body.setAvatar;
   const errors = validationResult(req);
+  let avatarPath;
 
   if (!avatar && !setAvatar) {
     return res.status(422).render('auth/signup', {
@@ -64,10 +65,10 @@ exports.postSignup = (req, res, next) => {
       name: name,
       validationErrors: errors.array()
     });
+  } else if (avatar && !setAvatar) {
+    avatarPath = avatar.path;
   }
 
-  console.log('Avatar', avatar);
-  console.log('Body', req.body);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/signup', {
       errorMessage: errors.array()[0].msg,
@@ -85,7 +86,8 @@ exports.postSignup = (req, res, next) => {
       const newUser = new User({
         name,
         email,
-        hashedPassword
+        hashedPassword,
+        avatar: avatarPath
       });
       return newUser.save();
     })
