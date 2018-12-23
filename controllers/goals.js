@@ -14,6 +14,13 @@ exports.getCharts = (req, res, next) => {
   });
 };
 
+exports.getGoalList = (req, res, next) => {
+  res.render('goals/goal-list', {
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
+};
+
 exports.getAddGoal = (req, res, next) => {
   res.render('goals/add-goal', {
     errorMessage: req.flash('error'),

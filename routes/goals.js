@@ -7,6 +7,8 @@ router.get('/dashboard', authGuard, goalsController.getDashboard);
 
 router.get('/charts', authGuard, goalsController.getCharts);
 
+router.get('/goal-list', authGuard, goalsController.getGoalList);
+
 router.get('/add-goal', authGuard, goalsController.getAddGoal);
 
 router.post('/add-goal', authGuard, goalsController.postAddGoal);
