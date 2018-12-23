@@ -112,6 +112,13 @@ input.invalid {
   border: 1px solid red;
 }
 
+.card {
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 0px 15px;
+  margin: 5px 0px;
+}
+
 .super-container {
   min-height: 100%;
   display: flex;

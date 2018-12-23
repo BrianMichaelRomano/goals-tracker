@@ -15,7 +15,10 @@ exports.getCharts = (req, res, next) => {
 };
 
 exports.getGoalList = (req, res, next) => {
+  const goals = req.user.goals;
+
   res.render('goals/goal-list', {
+    goals: goals,
     errorMessage: req.flash('error'),
     successMessage: req.flash('success')
   });
@@ -40,7 +43,7 @@ exports.postAddGoal = (req, res, next) => {
   req.user.save()
     .then(() => {
 
-      res.redirect('dashboard');
+      res.redirect('goal-list');
     })
     .catch(err => console.log(err));
 };

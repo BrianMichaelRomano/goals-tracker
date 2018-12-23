@@ -12,7 +12,16 @@
       <%- include('../includes/messages.ejs') %>
       <div class="super-container">
         <h1>Goals</h1>
-
+        <% goals.forEach((goal) => { %>
+        <div class="card" style="border-color: <%= goal.borderColor %>; background-color: <%= goal.backgroundColor %>">
+          <h4>
+            <%= goal.goalName %>
+          </h4>
+          <p>Chart Type:
+            <%= goal.chartType %>
+          </p>
+        </div>
+        <% }) %>
       </div>
     </main>
     <%- include('../includes/footer.ejs') %>
