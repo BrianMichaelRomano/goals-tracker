@@ -14,6 +14,14 @@ exports.getCharts = (req, res, next) => {
   });
 };
 
+exports.getGoal = (req, res, next) => {
+  const goal = req.user.goals.find(goal => {
+    return goal._id.toString() === req.params.goalId;
+  });
+
+  res.send(goal);
+};
+
 exports.getGoalList = (req, res, next) => {
   const goals = req.user.goals;
 

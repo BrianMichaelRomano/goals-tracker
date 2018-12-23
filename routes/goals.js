@@ -11,6 +11,8 @@ router.get('/goal-list', authGuard, goalsController.getGoalList);
 
 router.get('/goal-chart/:goalId', authGuard, goalsController.getGoalChart);
 
+router.get('/goal/:goalId', authGuard, goalsController.getGoal);
+
 router.get('/add-goal', authGuard, goalsController.getAddGoal);
 
 router.post('/add-goal', authGuard, goalsController.postAddGoal);
