@@ -31,6 +31,18 @@ exports.getAddGoal = (req, res, next) => {
   });
 };
 
+exports.getGoalChart = (req, res, next) => {
+  const goal = req.user.goals.find(goal => {
+    return goal._id.toString() === req.params.goalId;
+  });
+
+  res.render('goals/goal-chart', {
+    goal: goal,
+    errorMessage: req.flash('error'),
+    successMessage: req.flash('success')
+  });
+};
+
 exports.postAddGoal = (req, res, next) => {
   const newGoal = new Goal({
     goalName: req.body.goalName,

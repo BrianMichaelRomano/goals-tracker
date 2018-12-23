@@ -117,6 +117,9 @@ input.invalid {
   border-radius: 5px;
   padding: 0px 15px;
   margin: 5px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .super-container {
