@@ -132,6 +132,7 @@ input.invalid {
   cursor: pointer;
   font-size: 16px;
   text-decoration: none;
+  max-width: fit-content;
 }
 
 .btn:hover {
