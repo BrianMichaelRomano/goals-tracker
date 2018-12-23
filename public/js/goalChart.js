@@ -24,7 +24,7 @@ function renderChart(goal) {
   const chartLabels = createChartLables(goal.daysToTrack);
   const data = {
     label: goal.goalName,
-    data: [3, 4, 6, 2, 6, 7, 8, 6],
+    data: goal.dataSet,
     backgroundColor: goal.backgroundColor,
     borderColor: goal.borderColor,
     borderWidth: 1

@@ -27,6 +27,10 @@ const goalSchema = new Schema({
   backgroundColor: {
     type: String,
     default: '#a6aca0'
+  },
+  dataSet: {
+    type: Array,
+    default: []
   }
 });
 
