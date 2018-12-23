@@ -16,7 +16,7 @@ function createChartLables(numOfDays) {
 const chartLabels = createChartLables(daysToTrack);
 const data = {
   label: goalName,
-  data: [],
+  data: [3, 4, 6, 2, 6, 7, 8, 6],
   backgroundColor: backgroundColor,
   borderColor: borderColor,
   borderWidth: 1
@@ -33,8 +33,18 @@ let myChart = new Chart(ctx, {
   options: {
     scales: {
       yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Hours'
+        },
         ticks: {
           beginAtZero: true
+        }
+      }],
+      xAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: 'Days'
         }
       }]
     },
