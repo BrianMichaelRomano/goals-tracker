@@ -9,4 +9,6 @@ router.get('/charts', authGuard, goalsController.getCharts);
 
 router.get('/add-goal', authGuard, goalsController.getAddGoal);
 
+router.post('/add-goal', authGuard, goalsController.postAddGoal);
+
 module.exports = router;
