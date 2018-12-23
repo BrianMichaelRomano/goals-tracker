@@ -1,5 +1,6 @@
 const pathArray = window.location.pathname.split('/');
 const goalId = pathArray[pathArray.length - 1];
+const dataDetails = document.querySelector('#dataDetails');
 let goal;
 
 fetch(`http://localhost:5000/goals/goal/${goalId}`)
@@ -46,7 +47,9 @@ function renderChart(goal) {
             labelString: 'Hours'
           },
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            max: 24,
+            min: 0
           }
         }],
         xAxes: [{
@@ -57,10 +60,26 @@ function renderChart(goal) {
         }]
       },
       responsive: true
+    },
+    plugins: [{
+      beforeDraw: function (c) {
+        var chartHeight = c.chart.height;
+        c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+      }
+    }]
+  });
+
+  document.getElementById("myChart").addEventListener('click', (e) => {
+    var activePoints = myChart.getElementsAtEvent(e);
+    if (activePoints[0] !== undefined) {
+      dataDetails.innerHTML = `
+          <h3>Details</h3>
+          <p>Day: ${activePoints[0]._index + 1}</p>
+          <p>Hours: ${goal.dataSet[activePoints[0]._index]}</p>
+        `;
+      console.log(activePoints[0]);
+      console.log('Hours', goal.dataSet[activePoints[0]._index]);
+      console.log('Day', activePoints[0]._index + 1);
     }
   });
-  document.getElementById("myChart").onclick = function (evt) {
-    var activePoints = myChart.getElementsAtEvent(evt);
-    console.log(activePoints);
-  };
 };

@@ -19,13 +19,14 @@
         <canvas id="myChart" width="800" height="400"></canvas>
         <div id="chartDiv"></div>
 
+        <div id="dataDetails"></div>
+
         <form action="/goals/goal/add-data/<%= goal._id %>" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <div class="form-group">
             <label for="hours">Hours Spent</label>
             <input type="number" name="hours" id="hours" value="0">
           </div>
-
           <button type="submit">Submit Hours</button>
         </form>
 
