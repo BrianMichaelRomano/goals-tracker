@@ -11,6 +11,22 @@ const goalSchema = new Schema({
     type: Number,
     default: Date.now(),
     required: true
+  },
+  chartType: {
+    type: String,
+    default: 'line'
+  },
+  daysToTrack: {
+    type: Number,
+    default: 30
+  },
+  borderColor: {
+    type: String,
+    default: '#808877'
+  },
+  backgroundColor: {
+    type: String,
+    default: '#a6aca0'
   }
 });
 

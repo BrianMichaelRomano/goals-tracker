@@ -20,7 +20,7 @@ const userSchema = new Schema({
   resetTokenExpiration: Date,
   goals: {
     type: Array,
-    default: ['Programming', 'Family', 'Excercise', 'Relaxing']
+    default: []
   },
   avatar: {
     type: String
