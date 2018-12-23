@@ -17,22 +17,22 @@
           <div class="form-group">
             <label for="name">Name</label>
             <input class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>" type="name" name="name"
-              id="name" value="<%= name %>">
+              id="name" value="<%= name %>" placeholder="Enter Your Name...">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
             <input class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email" name="email"
-              id="email" value="<%= email %>">
+              id="email" value="<%= email %>" placeholder="Enter Your Email...">
           </div>
           <div class="form-group">
             <label for="password">Password</label>
             <input class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" type="password"
-              name="password" id="password" value="<%= password %>">
+              name="password" id="password" value="<%= password %>" placeholder="Enter Your Password...">
           </div>
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
             <input class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>" type="password"
-              name="confirmPassword" id="confirmPassword" value="<%= confirmPassword %>">
+              name="confirmPassword" id="confirmPassword" value="<%= confirmPassword %>" placeholder="Confirm Password...">
           </div>
           <div class="form-group">
             <label for="avatar">Avatar Picture</label>
