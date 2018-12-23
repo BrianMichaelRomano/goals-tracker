@@ -11,6 +11,7 @@
     <main class="container">
       <%- include('../includes/messages.ejs') %>
       <div class="form-container">
+        <a href="/goals/goal-list" class="btn"><small>Back to Goals</small></a>
         <h1>Add Goal</h1>
         <form action="/goals/add-goal" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
