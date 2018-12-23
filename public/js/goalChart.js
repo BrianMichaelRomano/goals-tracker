@@ -59,4 +59,8 @@ function renderChart(goal) {
       responsive: true
     }
   });
+  document.getElementById("myChart").onclick = function (evt) {
+    var activePoints = myChart.getElementsAtEvent(evt);
+    console.log(activePoints);
+  };
 };
