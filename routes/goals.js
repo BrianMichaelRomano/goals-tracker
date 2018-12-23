@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const chartsController = require('../controllers/charts.js');
+const goalsController = require('../controllers/goals.js');
 const authGuard = require('../middleware/authGuard.js');
 
-router.get('/dashboard', authGuard, chartsController.getChart);
+router.get('/dashboard', authGuard, goalsController.getDashboard);
 
 module.exports = router;

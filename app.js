@@ -13,7 +13,7 @@ const User = require('./models/user.js');
 const rootDir = require('./util/rootDir.js');
 
 const authRoutes = require('./routes/auth.js');
-const chartRoutes = require('./routes/charts.js');
+const goalRoutes = require('./routes/goals.js');
 const accountRoutes = require('./routes/account.js');
 
 const app = express();
@@ -104,7 +104,7 @@ app.use((req, res, next) => {
 
 app.use(flash());
 app.use('/auth', authRoutes);
-app.use('/charts', chartRoutes);
+app.use('/goals', goalRoutes);
 app.use('/account', accountRoutes);
 
 

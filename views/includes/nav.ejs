@@ -9,7 +9,7 @@
         <a href="/auth/login">LOGIN</a>
         <a href="/auth/signup">SIGNUP</a>
         <% } else {%>
-        <a href="/charts/dashboard">CHARTS</a>
+        <a href="/goals/dashboard">DASHBOARD</a>
         <a href="/account/profile">PROFILE</a>
         <form action="/auth/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
