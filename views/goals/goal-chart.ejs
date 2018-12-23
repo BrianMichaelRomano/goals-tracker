@@ -24,14 +24,6 @@
     <%- include('../includes/footer.ejs') %>
   </div>
 
-  <!-- Presenting data for js to grab -->
-  <input id="goalName" type="hidden" value="<%= goal.goalName %>">
-  <input id="chartType" type="hidden" value="<%= goal.chartType %>">
-  <input id="daysToTrack" type="hidden" value="<%= goal.daysToTrack %>">
-  <input id="borderColor" type="hidden" value="<%= goal.borderColor %>">
-  <input id="backgroundColor" type="hidden" value="<%= goal.backgroundColor %>">
-  <input id="startDate" type="hidden" value="<%= goal.startDate %>">
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <script src="/js/goalChart.js"></script>
 </body>
