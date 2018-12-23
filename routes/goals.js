@@ -13,6 +13,8 @@ router.get('/goal-chart/:goalId', authGuard, goalsController.getGoalChart);
 
 router.get('/goal/:goalId', authGuard, goalsController.getGoal);
 
+router.post('/goal/add-data/:goalId', authGuard, goalsController.postGoalAddData);
+
 router.get('/add-goal', authGuard, goalsController.getAddGoal);
 
 router.post('/add-goal', authGuard, goalsController.postAddGoal);
