@@ -7,7 +7,7 @@ const startDate = document.querySelector('#startDate').value;
 
 function createChartLables(numOfDays) {
   const result = [];
-  for (let i = 1; i < numOfDays; i++) {
+  for (let i = 1; i <= numOfDays; i++) {
     result.push(i);
   }
   return result;
