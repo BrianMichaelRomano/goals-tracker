@@ -15,7 +15,7 @@ module.exports = [
         })
         .catch(err => console.log(err));
     })
-    .normalizeEmail(),
+    .normalizeEmail({ gmail_remove_dots: false }),
   body('password', 'Password must be 6 to 14 characters long and use numbers and text only...')
     .isLength({ min: 6, max: 14 })
     .isAlphanumeric()
