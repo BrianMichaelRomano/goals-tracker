@@ -19,4 +19,6 @@ router.get('/add-goal', authGuard, goalsController.getAddGoal);
 
 router.post('/add-goal', authGuard, goalsController.postAddGoal);
 
+router.post('/delete-goal', authGuard, goalsController.postDeleteGoal);
+
 module.exports = router;

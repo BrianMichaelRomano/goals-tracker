@@ -19,11 +19,12 @@
           <h4>
             <%= goal.goalName %>
           </h4>
-          <p>
-            Chart Type:
-            <%= goal.chartType %>
-          </p>
           <a class="btn" href="/goals/goal-chart/<%= goal._id %>">View Chart</a>
+          <form action="/goals/delete-goal" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="goalId" id="goalId">
+            <button class="btn btn-warning">X</button>
+          </form>
         </div>
         <% }) %>
       </div>

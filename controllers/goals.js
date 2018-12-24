@@ -69,6 +69,19 @@ exports.postAddGoal = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+exports.postDeleteGoal = (req, res, next) => {
+  const goalIndex = req.user.goals.findIndex(goal => {
+    return goal._id.toString() === req.body.goalId;
+  });
+
+  req.user.goals.splice(goalIndex, 1);
+  User.update({ _id: req.user._id }, req.user)
+    .then(() => {
+      res.redirect('/goals/goal-list');
+    })
+    .catch(err => console.log(err));
+};
+
 exports.getGoalChart = (req, res, next) => {
   const goal = req.user.goals.find(goal => {
     return goal._id.toString() === req.params.goalId;

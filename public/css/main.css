@@ -79,22 +79,6 @@ img.avatar {
   color: rgb(21, 156, 66);
 }
 
-
-.warning {
-  border: 1px solid rgba(129, 58, 58, 0.637);
-  background-color: rgba(223, 162, 162, 0.637);
-}
-
-.success {
-  border: 1px solid rgba(118, 202, 125, 0.637);
-  background-color: rgba(190, 252, 195, 0.637);
-}
-
-.inform {
-  border: 1px solid rgb(194, 187, 92);
-  background-color: rgb(243, 236, 141);
-}
-
 .message-box {
   padding: 0px 20px;
   border-radius: 10px;
@@ -169,6 +153,27 @@ input.invalid {
 .btn:hover {
   color: rgb(44, 44, 44);
   background-color: rgba(211, 211, 211, 0.568);
+}
+
+.btn-warning {
+  border: 1px solid rgb(196, 33, 33);
+  background-color: rgb(228, 98, 98);
+  color: black;
+}
+
+.warning {
+  border: 1px solid rgba(129, 58, 58, 0.637);
+  background-color: rgba(223, 162, 162, 0.637);
+}
+
+.success {
+  border: 1px solid rgba(118, 202, 125, 0.637);
+  background-color: rgba(190, 252, 195, 0.637);
+}
+
+.inform {
+  border: 1px solid rgb(194, 187, 92);
+  background-color: rgb(243, 236, 141);
 }
 
 nav {
