@@ -51,8 +51,11 @@ form {
   display: flex;
   flex-direction: column;
   max-width: 400px;
-  min-width: 300px;
   height: 100%;
+}
+
+form.wide {
+  min-width: 300px;
 }
 
 .mt {

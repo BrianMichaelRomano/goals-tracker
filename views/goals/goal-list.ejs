@@ -19,11 +19,11 @@
           <h4>
             <%= goal.goalName %>
           </h4>
-          <a class="btn" href="/goals/goal-chart/<%= goal._id %>">View Chart</a>
+          <a class="btn" href="/goals/goal-chart/<%= goal._id %>"><i class="fas fa-chart-line"></i></a>
           <form action="/goals/delete-goal" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="goalId" id="goalId">
-            <button class="btn btn-warning">X</button>
+            <button class="btn btn-warning"><i class="fas fa-times"></i></i></button>
           </form>
         </div>
         <% }) %>
