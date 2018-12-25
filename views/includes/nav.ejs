@@ -17,9 +17,26 @@
         </form>
         <% } %>
       </ul>
-      <div id="mobile-nav-toggle">
+      <div id="mobileNavToggle">
         <i class="fas fa-2x fa-bars"></i>
       </div>
     </div>
+  </div>
+  <div id="navDropDown" class="closed">
+    <ul>
+      <% if(!isAuthenticated) { %>
+      <li><a href="/auth/login">LOGIN</a></li>
+      <li><a href="/auth/signup">SIGNUP</a></li>
+      <% } else {%>
+      <li><a href="/goals/dashboard">DASHBOARD</a></li>
+      <li><a href="/account/profile">PROFILE</a></li>
+      <li>
+        <form action="/auth/logout" method="POST">
+          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+          <button type="submit">LOGOUT</button>
+        </form>
+      </li>
+      <% } %>
+    </ul>
   </div>
 </nav>

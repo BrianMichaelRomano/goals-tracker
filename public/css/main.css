@@ -218,8 +218,32 @@ nav form {
   align-items: center;
 }
 
-.mobile-nav-toggle {
-  color: white;
+#navDropDown ul{
+  display: block;
+  text-align: center;
+  padding: 0;
+}
+
+#navDropDown li {
+  padding: 5px;
+}
+
+#navDropDown li:hover {
+  background-color: lightgray;
+  color: black;
+}
+
+#navDropDown li:hover a{
+  background-color: lightgray;
+  color: black;
+}
+
+.open {
+  display: block;
+}
+
+.closed {
+  display: none;
 }
 
 .margin-r {
@@ -243,7 +267,7 @@ nav form {
     max-width: 620px;
   }
 
-  #mobile-nav-toggle {
+  #mobileNavToggle {
     display: none;
   }
 }
@@ -253,7 +277,7 @@ nav form {
     max-width: 860px;
   }
 
-  #mobile-nav-toggle {
+  #mobileNavToggle{
     display: none;
   }
 }
@@ -262,7 +286,7 @@ nav form {
   .container {
     max-width: 1000px;
   }
-  #mobile-nav-toggle {
+  #mobileNavToggle {
     display: none;
   }
 }
