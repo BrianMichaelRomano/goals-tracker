@@ -18,7 +18,7 @@ const accountRoutes = require('./routes/account.js');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const DB_URI = process.env.DB_URI;
 const SESS_SECRET = process.env.SESS_SECRET;
 
