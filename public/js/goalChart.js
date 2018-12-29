@@ -5,9 +5,9 @@ let goal;
 
 // fetch(`http://localhost:5000/goals/goal/${goalId}`)
 fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
-  .then(goal => {
-    return goal.json();
-  })
+  // .then(goal => goal.json())
+  .then(goal => goal.text())
+  .then(res => console.log(text))
   .then(goalData => {
     renderChart(goalData);
   })
