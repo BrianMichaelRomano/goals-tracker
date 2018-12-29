@@ -61,7 +61,13 @@ function renderChart(goal) {
         }]
       },
       responsive: true
-    }
+    },
+    plugins: [{
+      beforeDraw: function (c) {
+        var chartHeight = c.chart.height;
+        c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+      }
+    }]
   });
 
   document.getElementById("myChart").addEventListener('click', (e) => {
