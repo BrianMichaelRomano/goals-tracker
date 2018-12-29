@@ -7,7 +7,7 @@ let goal;
 fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
   // .then(goal => goal.json())
   .then(goal => goal.text())
-  .then(res => console.log(text))
+  .then(res => console.log(res))
   .then(goalData => {
     renderChart(goalData);
   })
