@@ -20,6 +20,9 @@ exports.getGoal = (req, res, next) => {
     return goal._id.toString() === req.params.goalId;
   });
 
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
   res.send(goal);
 };
 
