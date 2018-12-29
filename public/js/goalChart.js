@@ -61,7 +61,7 @@ function renderChart(goal) {
           }
         }]
       },
-      responsive: true
+      responsive: false
     },
     plugins: [{
       beforeDraw: function (c) {
