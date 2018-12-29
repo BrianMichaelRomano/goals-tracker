@@ -25,6 +25,12 @@ const SESS_SECRET = process.env.SESS_SECRET;
 app.set('views', 'views');
 app.set('view engine', 'ejs');
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(rootDir, 'public')));
 app.use('/images', express.static(path.join(rootDir, 'images')));
@@ -76,12 +82,6 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('avatar'));
 
