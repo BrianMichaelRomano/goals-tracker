@@ -3,6 +3,7 @@ const goalId = pathArray[pathArray.length - 1];
 const dataDetails = document.querySelector('#dataDetails');
 let goal;
 
+// Needs to be replaced by deployed app url
 fetch(`http://localhost:5000/goals/goal/${goalId}`)
   .then(goal => {
     return goal.json();
