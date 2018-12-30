@@ -7,10 +7,11 @@ goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
 
+console.log('Running js...');
+
 if (goal.dataSet === "") {
   goal.dataSet = [];
 }
-console.log(goal)
 
 function createChartLables(numOfDays) {
   const result = [];
@@ -21,6 +22,7 @@ function createChartLables(numOfDays) {
 };
 
 function renderChart(goal) {
+  console.log('Rendering chart...');
   const chartLabels = createChartLables(goal.daysToTrack);
   const data = {
     label: goal.goalName,
