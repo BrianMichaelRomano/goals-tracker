@@ -6,18 +6,20 @@
 </head>
 
 <body>
-  <div class="super-container">
+  <div>
     <%- include('includes/nav.ejs') %>
     <main class="container">
       <%- include('includes/messages.ejs') %>
-      <h1>Welcome</h1>
-      <h3>A daily <span class="secondary-color">GOALS</span> tracker for those in need of a routine.</h3>
-      <% if(!isAuthenticated) { %>
-      <a href="/auth/login" class="margin-r btn">Login</a>
-      <a href="/auth/signup" class="btn">Signup</a>
-      <% } else {%>
-      <a href="/goals/dashboard" class="btn">To Dashbaord</a>
-      <% } %>
+      <div class="jumbotron mt-3">
+        <h1>Welcome</h1>
+        <h3>A daily <span style="color: rgb(72, 182, 72);">Goals</span> tracker for those in need of a routine.</h3>
+        <% if(!isAuthenticated) { %>
+        <a class="btn btn-dark" href="/auth/login">Login</a>
+        <a class="btn btn-dark" href="/auth/signup">Signup</a>
+        <% } else {%>
+        <a class="btn btn-dark" href="/goals/dashboard">To Dashbaord</a>
+        <% } %>
+      </div>
     </main>
     <%- include('includes/footer.ejs') %>
   </div>

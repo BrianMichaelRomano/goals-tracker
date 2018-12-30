@@ -1,15 +1,11 @@
 <% if(errorMessage.length > 0) { %>
-<div class="message-box warning">
-  <p>
-    <%= errorMessage %>
-  </p>
+<div class="alert alert-danger text-center mt-3">
+  <%= errorMessage %>
 </div>
 <% } %>
 
 <% if(successMessage.length > 0) { %>
-<div class="message-box success">
-  <p>
-    <%= successMessage %>
-  </p>
+<div class="alert alert-success text-center mt-3">
+  <%= successMessage %>
 </div>
 <% } %>

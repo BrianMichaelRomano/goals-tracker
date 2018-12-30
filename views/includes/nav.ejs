@@ -1,42 +1,24 @@
-<nav class="nav">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <div class="nav-content">
-      <a href="/">
-        <h3><span class="secondary-color">Goals</span> Tracker</h3>
-      </a>
-      <ul>
+    <a class="navbar-brand" href="/"><span style="color: rgb(72, 182, 72);">Goals</span> Tracker</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
         <% if(!isAuthenticated) { %>
-        <a href="/auth/login">LOGIN</a>
-        <a href="/auth/signup">SIGNUP</a>
+        <a class="nav-item nav-link" href="/auth/login">Login</a>
+        <a class="nav-item nav-link" href="/auth/signup">Signup</a>
         <% } else {%>
-        <a href="/goals/dashboard">DASHBOARD</a>
-        <a href="/account/profile">PROFILE</a>
+        <a class="nav-item nav-link" href="/goals/dashboard">DASHBOARD</a>
+        <a class="nav-item nav-link" href="/account/profile">PROFILE</a>
         <form action="/auth/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
           <button type="submit">LOGOUT</button>
         </form>
         <% } %>
-      </ul>
-      <div id="mobileNavToggle">
-        <i class="fas fa-2x fa-bars"></i>
       </div>
     </div>
-  </div>
-  <div id="navDropDown" class="closed">
-    <ul>
-      <% if(!isAuthenticated) { %>
-      <li><a href="/auth/login">LOGIN</a></li>
-      <li><a href="/auth/signup">SIGNUP</a></li>
-      <% } else {%>
-      <li><a href="/goals/dashboard">DASHBOARD</a></li>
-      <li><a href="/account/profile">PROFILE</a></li>
-      <li>
-        <form action="/auth/logout" method="POST">
-          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-          <button type="submit">LOGOUT</button>
-        </form>
-      </li>
-      <% } %>
-    </ul>
   </div>
 </nav>

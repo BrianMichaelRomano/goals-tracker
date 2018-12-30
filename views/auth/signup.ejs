@@ -6,48 +6,46 @@
 </head>
 
 <body>
-  <div class="super-container">
-    <%- include('../includes/nav.ejs') %>
-    <main class="container">
-      <%- include('../includes/messages.ejs') %>
-      <div class="form-container">
-        <form action="/auth/signup" method="POST" novalidate enctype="multipart/form-data" class="wide">
-          <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-          <h1>Sign Up</h1>
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>" type="name" name="name"
-              id="name" value="<%= name %>" placeholder="Enter Your Name...">
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email" name="email"
-              id="email" value="<%= email %>" placeholder="Enter Your Email...">
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" type="password"
-              name="password" id="password" value="<%= password %>" placeholder="Enter Your Password...">
-          </div>
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input class="<%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>" type="password"
-              name="confirmPassword" id="confirmPassword" value="<%= confirmPassword %>" placeholder="Confirm Password...">
-          </div>
-          <div class="form-group">
-            <label for="avatar">Avatar Picture</label>
-            <input type="file" name="avatar" id="avatar">
-            <small>
-              <input type="checkbox" name="setAvatar" id="set-avatar">
-              Check box if you wish to set avatar later...
-            </small>
-          </div>
-          <button type="submit">Sign up</button>
-        </form>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <%- include('../includes/messages.ejs') %>
+    <h1 class="text-center">Sign Up</h1>
+    <form action="/auth/signup" method="POST" novalidate enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input class="form-control <%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>" type="name"
+          name="name" id="name" value="<%= name %>" placeholder="Enter Your Name...">
       </div>
-    </main>
-    <%- include('../includes/footer.ejs') %>
-  </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control <%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>" type="email"
+          name="email" id="email" value="<%= email %>" placeholder="Enter Your Email...">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control <%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" type="password"
+          name="password" id="password" value="<%= password %>" placeholder="Enter Your Password...">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input class="form-control <%= validationErrors.find(e => e.param === 'confirmPassword') ? 'invalid' : '' %>"
+          type="password" name="confirmPassword" id="confirmPassword" value="<%= confirmPassword %>" placeholder="Confirm Password...">
+      </div>
+      <div class="custom-file">
+        <input class="custom-file-input" type="file" name="avatar" id="avatar">
+        <label class="custom-file-label" for="avatar">Avatar Picture</label>
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" type="checkbox" name="setAvatar" id="set-avatar">
+          <label class="custom-control-label" for="set-avatar"><small>Check box if you wish to set avatar later...</small></label>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-dark" type="submit">Sign up</button>
+      </div>
+    </form>
+  </main>
+  <%- include('../includes/footer.ejs') %>
 </body>
 
 </html>
