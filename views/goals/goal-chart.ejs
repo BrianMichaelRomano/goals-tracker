@@ -41,7 +41,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <!-- <script src="/js/goalChart.js"></script> -->
   <script>
-    var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx = document.querySelector("#myChart").getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'bar',
       data: {
