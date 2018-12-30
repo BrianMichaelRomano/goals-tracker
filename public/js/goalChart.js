@@ -1,18 +1,16 @@
-const pathArray = window.location.pathname.split('/');
-const goalId = pathArray[pathArray.length - 1];
 const dataDetails = document.querySelector('#dataDetails');
-let goal;
+let goal = {};
+goal.goalName = document.querySelector('#goalName').value;
+goal.chartType = document.querySelector('#chartType').value;
+goal.daysToTrack = document.querySelector('#daysToTrack').value;
+goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
+goal.backgroundColor = document.querySelector('#backgroundColor').value;
+goal.borderColor = document.querySelector('#borderColor').value;
 
-// fetch(`http://localhost:5000/goals/goal/${goalId}`)
-fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`, {
-  mode: 'no-cors'
-})
-  .then(goal => goal.json())
-  .then(goalData => {
-    renderChart(goalData);
-  })
-  .catch(err => console.log(err));
-
+if (goal.dataSet === "") {
+  goal.dataSet = [];
+}
+console.log(goal)
 
 function createChartLables(numOfDays) {
   const result = [];
@@ -84,3 +82,5 @@ function renderChart(goal) {
     }
   });
 };
+
+renderChart(goal);

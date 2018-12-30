@@ -15,17 +15,6 @@ exports.getCharts = (req, res, next) => {
   });
 };
 
-exports.getGoal = (req, res, next) => {
-  const goal = req.user.goals.find(goal => {
-    return goal._id.toString() === req.params.goalId;
-  });
-
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-  res.send(goal);
-};
-
 exports.postGoalAddData = (req, res, next) => {
   const goalIndex = req.user.goals.findIndex(goal => {
     return goal._id.toString() === req.params.goalId;
