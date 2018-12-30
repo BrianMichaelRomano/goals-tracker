@@ -41,10 +41,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <!-- <script src="/js/goalChart.js"></script> -->
   <script>
-    const ctx = document.getElementById("myChart").getContext('2d');
-
-    let myChart = new Chart(ctx, {
-      type: 'line',
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
       data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
         datasets: [{
@@ -68,6 +67,15 @@
           ],
           borderWidth: 1
         }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
       }
     });
   </script>
