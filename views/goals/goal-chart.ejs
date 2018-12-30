@@ -39,7 +39,46 @@
   <%- include('../includes/footer.ejs') %>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
-  <script src="/js/goalChart.js"></script>
+  <!-- <script src="/js/goalChart.js"></script> -->
+  <script>
+    const ctx = document.getElementById("myChart").getContext('2d');
+
+    let myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['1', '2', '3', '4'],
+        datasets: [[1, 2, 3, 4]]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Hours'
+            },
+            ticks: {
+              beginAtZero: true,
+              max: 24,
+              min: 0
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Days'
+            }
+          }]
+        },
+        responsive: true
+      },
+      plugins: [{
+        beforeDraw: function (c) {
+          var chartHeight = c.chart.height;
+          c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100; //fontSize: 6% of canvas height
+        }
+      }]
+    });
+  </script>
 </body>
 
 </html>
