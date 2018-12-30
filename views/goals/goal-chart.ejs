@@ -48,20 +48,6 @@
     const borderColor = document.getElementById('borderColor').value;
     let dataSet = document.getElementById('dataSet').value;
 
-    if (dataSet === "") {
-      dataSet = [];
-    }
-
-    function createChartLables(numOfDays) {
-      const result = [];
-      for (let i = 1; i <= numOfDays; i++) {
-        result.push(i);
-      }
-      return result;
-    };
-
-    const chartLabels = createChartLables(daysToTrack);
-
     var ctx = document.querySelector("#myChart").getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -79,20 +65,6 @@
           display: true,
           text: 'World population per region (in millions)'
         }
-      }
-    });
-
-    document.getElementById("myChart").addEventListener('click', (e) => {
-      var activePoints = myChart.getElementsAtEvent(e);
-      if (activePoints[0] !== undefined) {
-        dataDetails.innerHTML = `
-              <h3>Details</h3>
-              <p>Day: ${activePoints[0]._index + 1}</p>
-              <p>Hours: ${goal.dataSet[activePoints[0]._index]}</p>
-            `;
-        console.log(activePoints[0]);
-        console.log('Hours', goal.dataSet[activePoints[0]._index]);
-        console.log('Day', activePoints[0]._index + 1);
       }
     });
   </script>
