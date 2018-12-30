@@ -15,7 +15,7 @@
         <a class="nav-item nav-link" href="/account/profile">PROFILE</a>
         <form action="/auth/logout" method="POST">
           <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-          <button type="submit">LOGOUT</button>
+          <button class="btn btn-dark" type="submit">LOGOUT</button>
         </form>
         <% } %>
       </div>

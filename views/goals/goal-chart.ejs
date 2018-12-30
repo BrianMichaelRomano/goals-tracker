@@ -6,41 +6,37 @@
 </head>
 
 <body>
-  <div class="super-container">
-    <%- include('../includes/nav.ejs') %>
-    <main class="container">
-      <%- include('../includes/messages.ejs') %>
-      <div class="form-container">
-        <br>
-        <a href="/goals/goal-list" class="btn"><small>Back to Goals</small></a>
-        <h1>
-          <%= goal.goalName %>
-        </h1>
-        <canvas id="myChart"></canvas>
-        <div id="chartDiv"></div>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <%- include('../includes/messages.ejs') %>
+    <a href="/goals/goal-list" class="btn btn-dark mt-3"><small>Back to Goals</small></a>
+    <h1 class="text-center">
+      <%= goal.goalName %>
+    </h1>
+    <canvas id="myChart"></canvas>
 
-        <div id="dataDetails"></div>
+    <div id="dataDetails"></div>
 
-        <form action="/goals/goal/add-data/<%= goal._id %>" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <div class="form-group">
-            <label for="hours">Hours Spent</label>
-            <input type="number" name="hours" id="hours" value="0">
-          </div>
-          <button type="submit">Submit Hours</button>
-        </form>
-
-        <input type="hidden" id="goalName" value="<%= goal.goalName %>">
-        <input type="hidden" id="chartType" value="<%= goal.chartType %>">
-        <input type="hidden" id="daysToTrack" value="<%= goal.daysToTrack %>">
-        <input type="hidden" id="dataSet" value="<%= JSON.stringify(goal.dataSet) %>">
-        <input type="hidden" id="backgroundColor" value="<%= goal.backgroundColor %>">
-        <input type="hidden" id="borderColor" value="<%= goal.borderColor %>">
-
+    <form action="/goals/goal/add-data/<%= goal._id %>" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-group">
+        <label for="hours">Hours Spent</label>
+        <input class="form-control" type="number" name="hours" id="hours" value="0">
       </div>
-    </main>
-    <%- include('../includes/footer.ejs') %>
-  </div>
+      <div class="text-center">
+        <button class="btn btn-dark" type="submit">Submit Hours</button>
+      </div>
+    </form>
+
+    <input type="hidden" id="goalName" value="<%= goal.goalName %>">
+    <input type="hidden" id="chartType" value="<%= goal.chartType %>">
+    <input type="hidden" id="daysToTrack" value="<%= goal.daysToTrack %>">
+    <input type="hidden" id="dataSet" value="<%= JSON.stringify(goal.dataSet) %>">
+    <input type="hidden" id="backgroundColor" value="<%= goal.backgroundColor %>">
+    <input type="hidden" id="borderColor" value="<%= goal.borderColor %>">
+
+  </main>
+  <%- include('../includes/footer.ejs') %>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
   <script src="/js/goalChart.js"></script>

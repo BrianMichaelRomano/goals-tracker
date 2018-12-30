@@ -6,43 +6,31 @@
 </head>
 
 <body>
-  <div class="super-container">
-    <%- include('../includes/nav.ejs') %>
-    <main class="container">
-      <%- include('../includes/messages.ejs') %>
-      <div class="form-container">
-        <a href="/goals/goal-list" class="btn"><small>Back to Goals</small></a>
-        <h1>Add Goal</h1>
-        <form action="/goals/add-goal" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <div class="form-group">
-            <label for="goalName">Goal Name</label>
-            <input type="text" name="goalName" id="goalName" placeholder="Enter Goal Name...">
-          </div>
-          <div class="form-group">
-            <label for="daysToTrack">Number Of Days To Track</label>
-            <input type="number" name="daysToTrack" id="daysToTrack" value="30">
-          </div>
-          <div class="form-group">
-            <label for="chartType">Chart Type</label>
-            <select name="chartType" id="chartType">
-              <option value="line">Line</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="borderColor">Border Color</label>
-            <input type="color" name="borderColor" id="borderColor" value="#808877">
-          </div>
-          <div class="form-group">
-            <label for="backgroundColor">Background Color</label>
-            <input type="color" name="backgroundColor" id="backgroundColor" value="#a6aca0">
-          </div>
-          <button type="submit">Add Goal</button>
-        </form>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <%- include('../includes/messages.ejs') %>
+    <a href="/goals/goal-list" class="btn btn-dark mt-3"><small>Back to Goals</small></a>
+    <h1 class="text-center">Add Goal</h1>
+    <form action="/goals/add-goal" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-group">
+        <label for="goalName">Goal Name</label>
+        <input class="form-control" type="text" name="goalName" id="goalName" placeholder="Enter Goal Name...">
       </div>
-    </main>
-    <%- include('../includes/footer.ejs') %>
-  </div>
+      <div class="form-group">
+        <label for="daysToTrack">Number Of Days To Track</label>
+        <input class="form-control" type="number" name="daysToTrack" id="daysToTrack" value="30">
+      </div>
+      <div class="form-group">
+        <label for="backgroundColor">Background Color</label>
+        <input class="form-control" type="color" name="backgroundColor" id="backgroundColor" value="#a6aca0">
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark" type="submit">Add Goal</button>
+      </div>
+    </form>
+  </main>
+  <%- include('../includes/footer.ejs') %>
 </body>
 
 </html>

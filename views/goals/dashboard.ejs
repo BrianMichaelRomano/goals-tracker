@@ -6,19 +6,15 @@
 </head>
 
 <body>
-  <div class="super-container">
-    <%- include('../includes/nav.ejs') %>
-    <main class="container">
-      <%- include('../includes/messages.ejs') %>
-      <div class="super-container">
-        <h1>Dashboard</h1>
-        <ul>
-          <a href="/goals/goal-list" class="btn">Goals</a>
-        </ul>
-      </div>
-    </main>
-    <%- include('../includes/footer.ejs') %>
-  </div>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <%- include('../includes/messages.ejs') %>
+    <div class="text-center">
+      <h1>Dashboard</h1>
+      <a href="/goals/goal-list" class="btn btn-dark">Goals</a>
+    </div>
+  </main>
+  <%- include('../includes/footer.ejs') %>
 </body>
 
 </html>

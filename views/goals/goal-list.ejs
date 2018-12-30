@@ -6,31 +6,35 @@
 </head>
 
 <body>
-  <div class="super-container">
-    <%- include('../includes/nav.ejs') %>
-    <main class="container">
-      <%- include('../includes/messages.ejs') %>
-      <div class="super-container">
-        <a href="/goals/dashboard" class="mt btn"><small>Back to Dashboard</small></a>
-        <h1>Goals</h1>
-        <a href="/goals/add-goal" class="btn"><strong>+</strong></a>
-        <% goals.forEach((goal) => { %>
-        <div class="card" style="border-color: <%= goal.borderColor %>; background-color: <%= goal.backgroundColor %>">
-          <h4>
-            <%= goal.goalName %>
-          </h4>
-          <a class="btn" href="/goals/goal-chart/<%= goal._id %>"><i class="fas fa-chart-line"></i></a>
-          <form action="/goals/delete-goal" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <input type="hidden" name="goalId" id="goalId">
-            <button class="btn btn-warning"><i class="fas fa-times"></i></i></button>
-          </form>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <%- include('../includes/messages.ejs') %>
+    <a href="/goals/dashboard" class="mt-3 btn btn-dark"><small>Back to Dashboard</small></a>
+    <h1 class="text-center">Goals</h1>
+    <a href="/goals/add-goal" class="btn btn-dark"><strong>+</strong></a>
+    <% goals.forEach((goal) => { %>
+    <div class="card mt-3" style="background-color: <%= goal.backgroundColor %>">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-6">
+            <h4>
+              <%= goal.goalName %>
+            </h4>
+          </div>
+          <div class="col-6">
+            <form action="/goals/delete-goal" method="POST">
+              <button class="btn btn-danger float-right"><i class="fas fa-times"></i></i></button>
+              <a class="btn btn-dark float-right mr-3" href="/goals/goal-chart/<%= goal._id %>"><i class="fas fa-chart-line"></i></a>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" name="goalId" id="goalId">
+            </form>
+          </div>
         </div>
-        <% }) %>
       </div>
-    </main>
-    <%- include('../includes/footer.ejs') %>
-  </div>
+    </div>
+    <% }) %>
+  </main>
+  <%- include('../includes/footer.ejs') %>
 </body>
 
 </html>
