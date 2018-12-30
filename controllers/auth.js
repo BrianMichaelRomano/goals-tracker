@@ -166,7 +166,7 @@ exports.postResetPassword = (req, res, next) => {
             If you did not request a password reset, please head to Goals Tracker website and request a password reset and update your password.
             If you did request a password reset please click reset link below.
             </p>
-            <a href="http://localhost:5000/auth/new-password/${resetToken}">Password Reset</a>
+            <a href="https://sheltered-thicket-56176.herokuapp.com/auth/new-password/${resetToken}">Password Reset</a>
             `
           };
           sgMail.send(msg);
