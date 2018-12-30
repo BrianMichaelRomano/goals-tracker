@@ -32,7 +32,7 @@ function renderChart(goal) {
     borderWidth: 1
   };
 
-  const ctx = document.getElementById("myChart");
+  const ctx = document.getElementById("myChart").getContext('2d');
 
   let myChart = new Chart(ctx, {
     type: goal.chartType,
