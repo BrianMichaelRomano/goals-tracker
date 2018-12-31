@@ -3,7 +3,13 @@ const bcrypt = require('bcryptjs');
 const sgMail = require('@sendgrid/mail');
 const crypto = require('crypto');
 const { validationResult } = require('express-validator/check');
+const cloudinary = require('cloudinary');
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 exports.getLogin = (req, res, next) => {
   res.render('auth/login', {
@@ -53,7 +59,7 @@ exports.postSignup = (req, res, next) => {
   const avatar = req.file;
   const setAvatar = req.body.setAvatar;
   const errors = validationResult(req);
-  let avatarPath;
+  let avatarPathSecure;
 
   if (!avatar && !setAvatar) {
     return res.status(422).render('auth/signup', {
@@ -66,46 +72,52 @@ exports.postSignup = (req, res, next) => {
       validationErrors: errors.array()
     });
   } else if (avatar && !setAvatar) {
-    avatarPath = avatar.path;
-  }
+    cloudinary.v2.uploader.upload(avatar.path, function (err, result) {
+      if (err) {
+        return console.log('Error uploading to cloudinary...');
+      }
+      avatarPathSecure = result.secure_url;
 
-  if (!errors.isEmpty()) {
-    return res.status(422).render('auth/signup', {
-      errorMessage: errors.array()[0].msg,
-      successMessage: req.flash('success'),
-      password: password,
-      confirmPassword: req.body.confirmPassword,
-      email: email,
-      name: name,
-      validationErrors: errors.array()
+      if (!errors.isEmpty()) {
+        return res.status(422).render('auth/signup', {
+          errorMessage: errors.array()[0].msg,
+          successMessage: req.flash('success'),
+          password: password,
+          confirmPassword: req.body.confirmPassword,
+          email: email,
+          name: name,
+          validationErrors: errors.array()
+        });
+      }
+
+      bcrypt.hash(password, 14)
+        .then((hashedPassword) => {
+          const newUser = new User({
+            name,
+            email,
+            hashedPassword,
+            avatar: avatarPathSecure
+          });
+          return newUser.save();
+        })
+        .then(() => {
+          sgMail.setApiKey(process.env.SENDGRID_KEY);
+          const msg = {
+            to: req.body.email,
+            from: 'support@goalstracker.com',
+            subject: 'Your signed up!',
+            html: '<h1>Your are now signed up, just log in!</h1>'
+          };
+          sgMail.send(msg);
+          req.flash('success', 'You have signed up successfully...');
+          req.session.save(() => {
+            res.redirect('login');
+          });
+        })
+        .catch(err => console.log(err));
     });
   }
 
-  bcrypt.hash(password, 14)
-    .then((hashedPassword) => {
-      const newUser = new User({
-        name,
-        email,
-        hashedPassword,
-        avatar: avatarPath
-      });
-      return newUser.save();
-    })
-    .then(() => {
-      sgMail.setApiKey(process.env.SENDGRID_KEY);
-      const msg = {
-        to: req.body.email,
-        from: 'support@goalstracker.com',
-        subject: 'Your signed up!',
-        html: '<h1>Your are now signed up, just log in!</h1>'
-      };
-      sgMail.send(msg);
-      req.flash('success', 'You have signed up successfully...');
-      req.session.save(() => {
-        res.redirect('login');
-      });
-    })
-    .catch(err => console.log(err));
 };
 
 exports.getLogout = (req, res, next) => {
