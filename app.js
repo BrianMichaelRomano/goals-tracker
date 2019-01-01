@@ -99,6 +99,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+  res.status(403).redirect('index');
+});
+
 app.use(flash());
 app.use('/auth', authRoutes);
 app.use('/goals', goalRoutes);
