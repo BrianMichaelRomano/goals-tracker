@@ -125,12 +125,19 @@ exports.getLogout = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
-  req.session.destroy((err) => {
-    if (!err) {
-      return res.redirect('logout');
-    }
-    console.log(err);
-  });
+  if (req.session) {
+    return req.session.destroy((err) => {
+
+      if (err) {
+        console.log(err);
+        res.redirect('index');
+      } else {
+        res.redirect('logout');
+      }
+    });
+  } else {
+    res.redirect('index');
+  }
 };
 
 exports.getResetPassword = (req, res, next) => {
