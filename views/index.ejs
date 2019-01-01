@@ -6,23 +6,23 @@
 </head>
 
 <body>
-  <div>
-    <%- include('includes/nav.ejs') %>
-    <main class="container">
-      <%- include('includes/messages.ejs') %>
-      <div class="jumbotron mt-3">
-        <h1>Welcome</h1>
-        <h3>A daily <span style="color: rgb(72, 182, 72);">Goals</span> tracker for those in need of a routine.</h3>
-        <% if(!isAuthenticated) { %>
-        <a class="btn btn-dark" href="/auth/login">Login</a>
-        <a class="btn btn-dark" href="/auth/signup">Signup</a>
-        <% } else {%>
-        <a class="btn btn-dark" href="/goals/dashboard">To Dashbaord</a>
-        <% } %>
-      </div>
-    </main>
-    <%- include('includes/footer.ejs') %>
+  <%- include('includes/nav.ejs') %>
+  <main class="container">
+    <%- include('includes/messages.ejs') %>
+    <div class="jumbotron mt-3">
+      <h1>Welcome</h1>
+      <h3>A daily <span style="color: rgb(72, 182, 72);">Goals</span> tracker for those in need of a routine.</h3>
+      <% if(!isAuthenticated) { %>
+      <a class="btn btn-dark" href="/auth/login">Login</a>
+      <a class="btn btn-dark" href="/auth/signup">Signup</a>
+      <% } else {%>
+      <a class="btn btn-dark" href="/goals/dashboard">To Dashbaord</a>
+      <% } %>
+    </div>
+  </main>
+  <div class="chart-bg">
   </div>
+  <%- include('includes/footer.ejs') %>
 </body>
 
 </html>
