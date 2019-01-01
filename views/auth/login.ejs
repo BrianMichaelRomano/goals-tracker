@@ -10,7 +10,7 @@
   <main class="container">
     <%- include('../includes/messages.ejs') %>
     <h1 class="text-center">Login</h1>
-    <form action="/auth/login" method="POST">
+    <form action="/auth/login" method="POST" class="form-center">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="form-group">
         <label for="email">Email</label>

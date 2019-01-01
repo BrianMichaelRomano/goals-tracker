@@ -5,6 +5,24 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+input {
+  max-width: 400px;
+}
+
+input[type=color] {
+  max-width: 50px;
+}
+
+input[type=number] {
+  max-width: 50px;
+}
+
+.form-center {
+  margin: 0 auto;
+  max-width: 400px;
+}
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -17,3 +35,4 @@ body {
 .jumbotron {
   background-color: transparent;
 }
+

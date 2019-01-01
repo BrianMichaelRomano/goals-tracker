@@ -11,7 +11,7 @@
     <%- include('../includes/messages.ejs') %>
     <a href="/goals/goal-list" class="btn btn-dark mt-3"><small>Back to Goals</small></a>
     <h1 class="text-center">Add Goal</h1>
-    <form action="/goals/add-goal" method="POST">
+    <form action="/goals/add-goal" method="POST" class="form-center">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <div class="form-group">
         <label for="goalName">Goal Name</label>

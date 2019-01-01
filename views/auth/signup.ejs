@@ -10,7 +10,7 @@
   <main class="container">
     <%- include('../includes/messages.ejs') %>
     <h1 class="text-center">Sign Up</h1>
-    <form action="/auth/signup" method="POST" novalidate enctype="multipart/form-data">
+    <form action="/auth/signup" method="POST" novalidate enctype="multipart/form-data" class="form-center">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <div class="form-group">
         <label for="name">Name</label>
@@ -34,7 +34,7 @@
       </div>
       <div class="custom-file">
         <input class="custom-file-input" type="file" name="avatar" id="avatar">
-        <label class="custom-file-label" for="avatar">Avatar Picture</label>
+        <label class="custom-file-label" for="avatar" id="avatarLabel">Avatar Picture</label>
         <div class="custom-control custom-checkbox">
           <input class="custom-control-input" type="checkbox" name="setAvatar" id="set-avatar">
           <label class="custom-control-label" for="set-avatar"><small>Check box if you wish to set avatar later...</small></label>
@@ -49,3 +49,11 @@
 </body>
 
 </html>
+
+<script>
+  var fileInputLabel = document.querySelector('#avatarLabel');
+  var fileInput = document.querySelector('#avatar');
+  fileInput.addEventListener('change', (e) => {
+    fileInputLabel.textContent = e.target.files[0].name;
+  });
+</script>
