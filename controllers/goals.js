@@ -50,7 +50,6 @@ exports.postAddGoal = (req, res, next) => {
     goalName: req.body.goalName,
     chartType: req.body.chartType,
     daysToTrack: req.body.daysToTrack,
-    borderColor: req.body.borderColor,
     backgroundColor: req.body.backgroundColor
   });
   req.user.goals.push(new Goal(newGoal));
