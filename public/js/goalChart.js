@@ -1,8 +1,9 @@
 var dataDetails = document.querySelector('#dataDetails');
 var goal = {};
 goal.goalName = document.querySelector('#goalName').value;
+goal.startDate = +document.querySelector('#startDate').value;
 goal.chartType = document.querySelector('#chartType').value;
-goal.daysToTrack = document.querySelector('#daysToTrack').value;
+goal.daysToTrack = +document.querySelector('#daysToTrack').value;
 goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
@@ -10,18 +11,40 @@ goal.borderColor = document.querySelector('#borderColor').value;
 if (goal.dataSet === "") {
   goal.dataSet = [];
 }
-console.log(goal)
 
-function createChartLables(numOfDays) {
+function parseDateDayMonth(date) {
+  var dateObj = new Date(date);
+  var day = dateObj.getDate() + 1;
+  var month = dateObj.getMonth() + 1;
+  var year = dateObj.getFullYear();
+  var dateStr = [
+    month,
+    day,
+    year.toString().substr(2, 2)
+  ].join('/');
+
+  return dateStr;
+};
+
+function createChartLables(startDate, daysToTrack) {
+  var dayLength = 24 * 60 * 60 * 1000;
+
   var result = [];
-  for (var i = 1; i <= numOfDays; i++) {
-    result.push(i);
+  for (var i = 0; i < daysToTrack; i++) {
+    var dateHolder;
+    if (i === 0) {
+      dateHolder = startDate;
+    } else {
+      dateHolder = startDate + (dayLength * i);
+    }
+    result.push(parseDateDayMonth(dateHolder));
   }
   return result;
 };
 
 function renderChart(goal) {
-  var chartLabels = createChartLables(goal.daysToTrack);
+  console.log(goal);
+  var chartLabels = createChartLables(goal.startDate, goal.daysToTrack);
   var data = {
     label: goal.goalName,
     data: goal.dataSet,
