@@ -36,7 +36,6 @@ function createChartLables(startDate, daysToTrack) {
 };
 
 function renderChart(goal) {
-  console.log(goal);
   var chartLabels = createChartLables(goal.startDate, goal.daysToTrack);
   var data = {
     label: goal.goalName,
