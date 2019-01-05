@@ -2,6 +2,8 @@ var dataDetails = document.querySelector('#dataDetails');
 var goal = {};
 goal.goalName = document.querySelector('#goalName').value;
 goal.startDate = +document.querySelector('#startDate').value;
+goal.goalTarget = +document.querySelector('#goalTarget').value;
+goal.goalDataType = document.querySelector('#goalDataType').value;
 goal.chartType = document.querySelector('#chartType').value;
 goal.daysToTrack = +document.querySelector('#daysToTrack').value;
 goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
@@ -13,17 +15,8 @@ if (goal.dataSet === "") {
 }
 
 function parseDateDayMonth(date) {
-  var dateObj = new Date(date);
-  var day = dateObj.getDate() + 1;
-  var month = dateObj.getMonth() + 1;
-  var year = dateObj.getFullYear();
-  var dateStr = [
-    month,
-    day,
-    year.toString().substr(2, 2)
-  ].join('/');
-
-  return dateStr;
+  var momentDate = moment(date);
+  return momentDate.format('MM[/]DD[/]YY');
 };
 
 function createChartLables(startDate, daysToTrack) {
@@ -66,18 +59,18 @@ function renderChart(goal) {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Hours'
+            labelString: goal.goalDataType
           },
           ticks: {
             beginAtZero: true,
-            max: 24,
-            min: 0
+            min: 0,
+            suggestedMax: goal.goalTarget - 1
           }
         }],
         xAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Days'
+            labelString: 'Date'
           }
         }]
       },
