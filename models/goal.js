@@ -4,13 +4,20 @@ const Schema = mongoose.Schema;
 const goalSchema = new Schema({
   goalName: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   startDate: {
     type: Number,
     default: Date.now(),
     required: true
+  },
+  goalTarget: {
+    type: Number,
+    default: 1
+  },
+  goalDataType: {
+    type: String,
+    default: 'minutes'
   },
   chartType: {
     type: String,

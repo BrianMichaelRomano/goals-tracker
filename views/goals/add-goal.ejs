@@ -17,12 +17,39 @@
         <label for="goalName">Goal Name</label>
         <input class="form-control" type="text" name="goalName" id="goalName" placeholder="Enter Goal Name...">
       </div>
-      <div class="form-group">
-        <label for="daysToTrack">Number Of Days To Track</label>
-        <input class="form-control" type="number" name="daysToTrack" id="daysToTrack" value="30">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="goalName">Goal Target</label>
+            <input class="form-control" type="number" name="goalTarget" id="goalTarget" placeholder="0">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="goalDataType">Goal Data Type</label>
+            <select class="custom-select" name="goalDataType" id="goalDataType">
+              <option selected>Select Type of Data To Track...</option>
+              <option value="minutesTracked">Minutes Per Day</option>
+              <option value="hoursTracked">Hours Per Day</option>
+              <option value="minutesTracked">Total Minutes</option>
+              <option value="hoursTracked">Total Hours</option>
+              <option value="timesTracked">Tasks Per Day</option>
+              <option value="timesTracked">Total Tasks</option>
+            </select>
+          </div>
+        </div>
       </div>
       <div class="form-group">
-        <label for="backgroundColor">Background Color</label>
+        <label for="daysToTrack">Goal Length</label>
+        <select class="custom-select" name="daysToTrack" id="daysToTrack">
+          <option selected>Select length of goal...</option>
+          <option value="7">Week</option>
+          <option value="30">Month</option>
+          <option value="365">Year</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="backgroundColor">Goal Color</label>
         <input class="form-control" type="color" name="backgroundColor" id="backgroundColor" value="#a6aca0">
       </div>
       <div class="text-center">

@@ -49,6 +49,8 @@ exports.postAddGoal = (req, res, next) => {
   const newGoal = new Goal({
     goalName: req.body.goalName,
     chartType: req.body.chartType,
+    goalTarget: req.body.goalTarget,
+    goalDataType: req.body.goalDataType,
     daysToTrack: req.body.daysToTrack,
     backgroundColor: req.body.backgroundColor
   });
