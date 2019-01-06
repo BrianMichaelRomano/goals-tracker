@@ -15,32 +15,42 @@
     </h1>
     <canvas id="myChart" width="800" height="400"></canvas>
 
-    <div id="chartControls">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="dataPointToggle">
-        <label class="form-check-label" for="defaultCheck1">
-          Toggle Data Points
-        </label>
+    <div id="control-panel">
+      <div id="chartControls" class="card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Chart Controls</h6>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="dataPointToggle">
+                <label class="form-check-label" for="defaultCheck1">
+                  Toggle Data Points
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="formControlRange">Max Y Axis</label>
+                <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="formControlRange">Max Y Axis</label>
-        <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
-      </div>
+      <div id="dataDetails"></div>
+      <form action="/goals/goal/add-data/<%= goal._id %>" method="POST" class="form-center">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="form-group">
+          <label for="hours">Hours Spent</label>
+          <input class="form-control" type="number" name="hours" id="hours" value="0">
+        </div>
+        <div class="text-center">
+          <button class="btn btn-dark" type="submit">Submit Hours</button>
+        </div>
+      </form>
     </div>
-
-    <div id="dataDetails"></div>
-
-    <form action="/goals/goal/add-data/<%= goal._id %>" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <div class="form-group">
-        <label for="hours">Hours Spent</label>
-        <input class="form-control" type="number" name="hours" id="hours" value="0">
-      </div>
-      <div class="text-center">
-        <button class="btn btn-dark" type="submit">Submit Hours</button>
-      </div>
-    </form>
   </main>
 
   <input type="hidden" id="goalName" value="<%= goal.goalName %>">
