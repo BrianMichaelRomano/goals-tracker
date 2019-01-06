@@ -10,6 +10,9 @@ goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
 
+var controls = {};
+controls.dataPointsToggle = document.querySelector('#dataPointToggle');
+
 if (goal.dataSet === "") {
   goal.dataSet = [];
 }
@@ -42,7 +45,9 @@ function renderChart(goal) {
     data: goal.dataSet,
     backgroundColor: goal.backgroundColor,
     borderColor: goal.borderColor,
-    borderWidth: 1
+    borderWidth: 1,
+    pointRadius: 0,
+    pointHitRadius: 10
   };
 
   var ctx = document.getElementById("myChart");
@@ -74,26 +79,28 @@ function renderChart(goal) {
         }]
       },
       responsive: true
-    },
-    plugins: [{
-      beforeDraw: function (c) {
-        var chartHeight = c.chart.height;
-        c.scales['y-axis-0'].options.ticks.fontSize = chartHeight * 6 / 100;
-      }
-    }]
+    }
+  });
+
+  controls.dataPointsToggle.addEventListener('change', (e) => {
+    if (e.target.checked) {
+      myChart.chart.data.datasets[0].pointRadius = 3;
+      myChart.update();
+    } else {
+      myChart.chart.data.datasets[0].pointRadius = 0;
+      myChart.update();
+    }
+    console.log(myChart.plugins)
   });
 
   document.getElementById("myChart").addEventListener('click', (e) => {
     var activePoints = myChart.getElementsAtEvent(e);
     if (activePoints[0] !== undefined) {
       dataDetails.innerHTML = `
-              <h3>Details</h3>
-              <p>Day: ${activePoints[0]._index + 1}</p>
-              <p>Hours: ${goal.dataSet[activePoints[0]._index]}</p>
-            `;
-      console.log(activePoints[0]);
-      console.log('Hours', goal.dataSet[activePoints[0]._index]);
-      console.log('Day', activePoints[0]._index + 1);
+        <h3>Details</h3>
+        <p>Day: ${activePoints[0]._index + 1}</p>
+        <p>Hours: ${goal.dataSet[activePoints[0]._index]}</p>
+      `;
     }
   });
 };
