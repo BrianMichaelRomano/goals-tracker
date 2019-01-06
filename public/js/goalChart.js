@@ -12,6 +12,7 @@ goal.borderColor = document.querySelector('#borderColor').value;
 
 var controls = {};
 controls.dataPointsToggle = document.querySelector('#dataPointToggle');
+controls.yAxisRange = document.querySelector('#yAxisRange');
 
 if (goal.dataSet === "") {
   goal.dataSet = [];
@@ -91,6 +92,14 @@ function renderChart(goal) {
       myChart.update();
     }
     console.log(myChart.plugins)
+  });
+
+  controls.yAxisRange.addEventListener('input', (e) => {
+    console.log(myChart.options.scales.yAxes[0])
+
+    var yAxis = e.target.value;
+    myChart.options.scales.yAxes[0].ticks.suggestedMax = yAxis;
+    myChart.update();
   });
 
   document.getElementById("myChart").addEventListener('click', (e) => {

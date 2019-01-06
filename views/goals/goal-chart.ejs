@@ -22,7 +22,13 @@
           Toggle Data Points
         </label>
       </div>
+
+      <div class="form-group">
+        <label for="formControlRange">Max Y Axis</label>
+        <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
+      </div>
     </div>
+
     <div id="dataDetails"></div>
 
     <form action="/goals/goal/add-data/<%= goal._id %>" method="POST">
