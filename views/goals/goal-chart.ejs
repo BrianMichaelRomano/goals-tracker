@@ -43,11 +43,12 @@
       <form action="/goals/goal/add-data/<%= goal._id %>" method="POST" class="form-center">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <div class="form-group">
-          <label for="hours">Hours Spent</label>
+          <label for="hours">
+            <%= goal.goalDataType %></label>
           <input class="form-control" type="number" name="hours" id="hours" value="0">
         </div>
         <div class="text-center">
-          <button class="btn btn-dark" type="submit">Submit Hours</button>
+          <button class="btn btn-dark" type="submit">Submit</button>
         </div>
       </form>
     </div>
