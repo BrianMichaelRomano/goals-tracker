@@ -20,19 +20,18 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="goalName">Goal Target</label>
-            <input class="form-control" type="number" name="goalTarget" id="goalTarget" placeholder="0">
+            <label for="goalType">Goal Type</label>
+            <select class="custom-select" name="goalType" id="goalType">
+              <option selected>Select Type Goal...</option>
+              <option value="Hours Spent">Hours Spent</option>
+              <option value="Times Tasks Task Performed">Times Tasks Task Performed</option>
+            </select>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="goalDataType">Goal Data Type</label>
-            <select class="custom-select" name="goalDataType" id="goalDataType">
-              <option selected>Select Type of Data To Track...</option>
-              <option value="Minutes">Minutes Per Day</option>
-              <option value="Hours">Hours Per Day</option>
-              <option value="Times Performed">Tasks Performed Per Day</option>
-            </select>
+            <label for="goalName">Goal Target</label>
+            <input class="form-control" type="number" name="goalTarget" id="goalTarget" placeholder="0">
           </div>
         </div>
       </div>

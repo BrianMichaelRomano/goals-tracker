@@ -3,13 +3,12 @@ var goal = {};
 goal.goalName = document.querySelector('#goalName').value;
 goal.startDate = +document.querySelector('#startDate').value;
 goal.goalTarget = +document.querySelector('#goalTarget').value;
-goal.goalDataType = document.querySelector('#goalDataType').value;
+goal.goalType = document.querySelector('#goalType').value;
 goal.chartType = document.querySelector('#chartType').value;
 goal.daysToTrack = +document.querySelector('#daysToTrack').value;
 goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
-
 var controls = {};
 controls.dataPointsToggle = document.querySelector('#dataPointToggle');
 controls.yAxisRange = document.querySelector('#yAxisRange');
@@ -64,7 +63,7 @@ function renderChart(goal) {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: goal.goalDataType
+            labelString: goal.goalType
           },
           ticks: {
             beginAtZero: true,
@@ -91,12 +90,9 @@ function renderChart(goal) {
       myChart.chart.data.datasets[0].pointRadius = 0;
       myChart.update();
     }
-    console.log(myChart.plugins)
   });
 
   controls.yAxisRange.addEventListener('input', (e) => {
-    console.log(myChart.options.scales.yAxes[0].ticks)
-
     var yAxis = e.target.value;
     myChart.options.scales.yAxes[0].ticks.max = +yAxis;
     myChart.update();

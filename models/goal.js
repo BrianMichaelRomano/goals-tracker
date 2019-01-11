@@ -15,9 +15,9 @@ const goalSchema = new Schema({
     type: Number,
     default: 1
   },
-  goalDataType: {
+  goalType: {
     type: String,
-    default: 'minutes'
+    default: 'time'
   },
   chartType: {
     type: String,
