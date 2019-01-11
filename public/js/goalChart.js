@@ -47,7 +47,7 @@ function renderChart(goal) {
     backgroundColor: goal.backgroundColor,
     borderColor: goal.borderColor,
     borderWidth: 1,
-    pointRadius: 0,
+    pointRadius: 3,
     pointHitRadius: 10
   };
 
@@ -69,7 +69,7 @@ function renderChart(goal) {
           ticks: {
             beginAtZero: true,
             min: 0,
-            suggestedMax: goal.goalTarget - 1
+            max: 24
           }
         }],
         xAxes: [{
@@ -95,10 +95,10 @@ function renderChart(goal) {
   });
 
   controls.yAxisRange.addEventListener('input', (e) => {
-    console.log(myChart.options.scales.yAxes[0])
+    console.log(myChart.options.scales.yAxes[0].ticks)
 
     var yAxis = e.target.value;
-    myChart.options.scales.yAxes[0].ticks.suggestedMax = yAxis;
+    myChart.options.scales.yAxes[0].ticks.max = +yAxis;
     myChart.update();
   });
 
