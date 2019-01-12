@@ -1,4 +1,5 @@
 var dataDetails = document.querySelector('#dataDetails');
+
 var goal = {};
 goal.goalName = document.querySelector('#goalName').value;
 goal.startDate = +document.querySelector('#startDate').value;
@@ -9,6 +10,7 @@ goal.daysToTrack = +document.querySelector('#daysToTrack').value;
 goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
+
 var controls = {};
 controls.dataPointsToggle = document.querySelector('#dataPointToggle');
 controls.yAxisRange = document.querySelector('#yAxisRange');
@@ -38,11 +40,19 @@ function createChartLables(startDate, daysToTrack) {
   return result;
 };
 
+function getDataValueArray(dataSet) {
+  const dataValueArray = dataSet.map(dataPoint => {
+    return dataPoint.value;
+  });
+
+  return dataValueArray;
+};
+
 function renderChart(goal) {
   var chartLabels = createChartLables(goal.startDate, goal.daysToTrack);
   var data = {
     label: goal.goalName,
-    data: goal.dataSet,
+    data: getDataValueArray(goal.dataSet),
     backgroundColor: goal.backgroundColor,
     borderColor: goal.borderColor,
     borderWidth: 1,
@@ -104,7 +114,7 @@ function renderChart(goal) {
       dataDetails.innerHTML = `
         <h3>Details</h3>
         <p>Day: ${activePoints[0]._index + 1}</p>
-        <p>Hours: ${goal.dataSet[activePoints[0]._index]}</p>
+        <p>Hours: ${goal.dataSet[activePoints[0]._index].value}</p>
       `;
     }
   });

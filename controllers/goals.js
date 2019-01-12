@@ -1,5 +1,6 @@
 const Goal = require('../models/goal.js');
 const User = require('../models/user.js');
+const DataPoint = require('../models/dataPoint.js');
 
 exports.getDashboard = (req, res, next) => {
   res.render('goals/dashboard', {
@@ -20,7 +21,9 @@ exports.postGoalAddData = (req, res, next) => {
     return goal._id.toString() === req.params.goalId;
   });
 
-  req.user.goals[goalIndex].dataSet.push(req.body.hours);
+  const newDataPoint = new DataPoint({ value: req.body.hours });
+
+  req.user.goals[goalIndex].dataSet.push(newDataPoint);
   User.update({ _id: req.user._id }, req.user)
     .then(() => {
       res.redirect(`/goals/goal-chart/${req.user.goals[goalIndex]._id.toString()}`);
@@ -54,7 +57,7 @@ exports.postAddGoal = (req, res, next) => {
     daysToTrack: req.body.daysToTrack,
     backgroundColor: req.body.backgroundColor
   });
-  req.user.goals.push(new Goal(newGoal));
+  req.user.goals.push(newGoal);
   req.user.save()
     .then(() => {
       res.redirect('goal-list');
