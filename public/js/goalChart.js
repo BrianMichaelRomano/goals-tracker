@@ -15,13 +15,22 @@ var controls = {};
 controls.dataPointsToggle = document.querySelector('#dataPointToggle');
 controls.yAxisRange = document.querySelector('#yAxisRange');
 
+var filter = {};
+filter.beginDate = document.querySelector('#beginDate');
+filter.endDate = document.querySelector('#endDate');
+
 if (goal.dataSet === "") {
   goal.dataSet = [];
 }
 
-function parseDateDayMonth(date) {
+function parseDateDayMonthYear(date) {
   var momentDate = moment(date);
   return momentDate.format('MM[/]DD[/]YYYY');
+};
+
+function dateToInputValue(date) {
+  var dateArray = date.split('/');
+  return [dateArray[2], dateArray[0], dateArray[1]].join('-');
 };
 
 function createChartLables(startDate, daysToTrack) {
@@ -35,17 +44,29 @@ function createChartLables(startDate, daysToTrack) {
     } else {
       dateHolder = startDate + (dayLength * i);
     }
-    result.push(parseDateDayMonth(dateHolder));
+    result.push(parseDateDayMonthYear(dateHolder));
   }
   return result;
 };
 
 function getDataValueArray(dataSet) {
-  const dataValueArray = dataSet.map(dataPoint => {
+  var dataValueArray = dataSet.map(dataPoint => {
     return dataPoint.value;
   });
 
   return dataValueArray;
+};
+
+function setDefaultFilterDates(startDate, dataSet, daysToTrack) {
+  var dayLength = 24 * 60 * 60 * 1000;
+  var beginDate = parseDateDayMonthYear(startDate);
+  var endDate = parseDateDayMonthYear(startDate + (dayLength * (daysToTrack - 1)));
+  filter.beginDate.value = dateToInputValue(beginDate);
+  filter.beginDate.min = dateToInputValue(beginDate);
+  filter.beginDate.max = dateToInputValue(endDate);
+  filter.endDate.value = dateToInputValue(endDate);
+  filter.endDate.min = dateToInputValue(beginDate);
+  filter.endDate.max = dateToInputValue(endDate);
 };
 
 function renderChart(goal) {
@@ -120,4 +141,5 @@ function renderChart(goal) {
   });
 };
 
+setDefaultFilterDates(goal.startDate, goal.dataSet, goal.daysToTrack);
 renderChart(goal);

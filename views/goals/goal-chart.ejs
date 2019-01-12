@@ -22,20 +22,19 @@
           <hr>
           <div class="row">
             <div class="col-md-6">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" checked="checked" id="dataPointToggle">
-                <label class="form-check-label" for="defaultCheck1">
-                  Toggle Data Points
-                </label>
+              <div class="form-group">
+                <label for="beginDate">From</label>
+                <input class="form-control" type="date" id="beginDate">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="formControlRange">Max Y Axis</label>
-                <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
+                <label for="endDate">To</label>
+                <input class="form-control" type="date" id="endDate">
               </div>
             </div>
           </div>
+          <button class="btn btn-dark">Apply</button>
         </div>
       </div>
 
