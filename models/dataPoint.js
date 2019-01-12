@@ -3,12 +3,11 @@ const Schema = mongoose.Schema;
 
 const dataPointSchema = new Schema({
   setDate: {
-    type: Number,
-    default: Date.now()
+    type: String
   },
   value: {
     type: Number,
-    required: true
+    default: null
   }
 });
 

@@ -7,8 +7,7 @@ const goalSchema = new Schema({
     required: true
   },
   startDate: {
-    type: Number,
-    default: Date.now(),
+    type: String,
     required: true
   },
   goalTarget: {

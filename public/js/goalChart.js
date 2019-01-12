@@ -11,6 +11,8 @@ goal.dataSet = JSON.parse(document.querySelector('#dataSet').value);
 goal.backgroundColor = document.querySelector('#backgroundColor').value;
 goal.borderColor = document.querySelector('#borderColor').value;
 
+console.log(goal.dataSet);
+
 var controls = {};
 controls.dataPointsToggle = document.querySelector('#dataPointToggle');
 controls.yAxisRange = document.querySelector('#yAxisRange');
@@ -18,10 +20,6 @@ controls.yAxisRange = document.querySelector('#yAxisRange');
 var filter = {};
 filter.beginDate = document.querySelector('#beginDate');
 filter.endDate = document.querySelector('#endDate');
-
-if (goal.dataSet === "") {
-  goal.dataSet = [];
-}
 
 function parseDateDayMonthYear(date) {
   var momentDate = moment(date);
@@ -33,20 +31,10 @@ function dateToInputValue(date) {
   return [dateArray[2], dateArray[0], dateArray[1]].join('-');
 };
 
-function createChartLables(startDate, daysToTrack) {
-  var dayLength = 24 * 60 * 60 * 1000;
-
-  var result = [];
-  for (var i = 0; i < daysToTrack; i++) {
-    var dateHolder;
-    if (i === 0) {
-      dateHolder = startDate;
-    } else {
-      dateHolder = startDate + (dayLength * i);
-    }
-    result.push(parseDateDayMonthYear(dateHolder));
-  }
-  return result;
+function createChartLabels(startDate, daysToTrack) {
+  return result = goal.dataSet.map(dataPoint => {
+    return dataPoint.setDate;
+  });
 };
 
 function getDataValueArray(dataSet) {
@@ -70,7 +58,7 @@ function setDefaultFilterDates(startDate, daysToTrack) {
 };
 
 function renderChart(goal) {
-  var chartLabels = createChartLables(goal.startDate, goal.daysToTrack);
+  var chartLabels = createChartLabels(goal.startDate, goal.daysToTrack);
   var data = {
     label: goal.goalName,
     data: getDataValueArray(goal.dataSet),
@@ -139,7 +127,20 @@ function renderChart(goal) {
       `;
     }
   });
+
+  document.getElementById('applyFilterBtn').addEventListener('click', () => {
+    // var dayLength = 24 * 60 * 60 * 1000;
+    // var begin = filter.beginDate.value;
+    // var end = filter.endDate.value;
+    // var beginMs = new Date(begin).getTime();
+    // var endMs = new Date(end).getTime();
+    // var numDaysBetweenDates = ((endMs - beginMs) / dayLength) + 1;
+    // console.log(beginMs)
+    // console.log(numDaysBetweenDates);
+    // console.log(myChart.data.datasets[0].data)
+    console.log(goal.dataSet)
+  });
 };
 
-setDefaultFilterDates(goal.startDate, goal.daysToTrack);
 renderChart(goal);
+setDefaultFilterDates(goal.startDate, goal.daysToTrack);
