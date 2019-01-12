@@ -57,7 +57,7 @@ function getDataValueArray(dataSet) {
   return dataValueArray;
 };
 
-function setDefaultFilterDates(startDate, dataSet, daysToTrack) {
+function setDefaultFilterDates(startDate, daysToTrack) {
   var dayLength = 24 * 60 * 60 * 1000;
   var beginDate = parseDateDayMonthYear(startDate);
   var endDate = parseDateDayMonthYear(startDate + (dayLength * (daysToTrack - 1)));
@@ -141,5 +141,5 @@ function renderChart(goal) {
   });
 };
 
-setDefaultFilterDates(goal.startDate, goal.dataSet, goal.daysToTrack);
+setDefaultFilterDates(goal.startDate, goal.daysToTrack);
 renderChart(goal);
