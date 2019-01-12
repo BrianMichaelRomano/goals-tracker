@@ -21,7 +21,7 @@ if (goal.dataSet === "") {
 
 function parseDateDayMonth(date) {
   var momentDate = moment(date);
-  return momentDate.format('MM[/]DD[/]YY');
+  return momentDate.format('MM[/]DD[/]YYYY');
 };
 
 function createChartLables(startDate, daysToTrack) {

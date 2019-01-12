@@ -15,7 +15,30 @@
     </h1>
     <canvas id="myChart" width="800" height="400"></canvas>
 
-    <div id="control-panel">
+    <div id="filter-panel">
+      <div id="chartFilters" class="card">
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">Chart Filter</h6>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" checked="checked" id="dataPointToggle">
+                <label class="form-check-label" for="defaultCheck1">
+                  Toggle Data Points
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="formControlRange">Max Y Axis</label>
+                <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="chartControls" class="card">
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-muted">Chart Controls</h6>
