@@ -1,3 +1,5 @@
+window['moment-range'].extendMoment(moment);
+
 var dataDetails = document.querySelector('#dataDetails');
 
 var goal = {};
@@ -27,7 +29,7 @@ function dateToInputValue(date) {
   return [dateArray[2], dateArray[0], dateArray[1]].join('-');
 };
 
-function createChartLabels(startDate) {
+function createChartLabels() {
   return result = goal.dataSet.map(dataPoint => {
     return dataPoint.setDate;
   });
@@ -56,7 +58,7 @@ function setDefaultDates(startDate, daysToTrack) {
 };
 
 function renderChart(goal) {
-  var chartLabels = createChartLabels(goal.startDate);
+  var chartLabels = createChartLabels();
   var data = {
     label: goal.goalName,
     data: getDataValueArray(goal.dataSet),
@@ -125,20 +127,38 @@ function renderChart(goal) {
       `;
     }
   });
-
-  document.getElementById('applyFilterBtn').addEventListener('click', () => {
-    // var dayLength = 24 * 60 * 60 * 1000;
-    // var begin = filter.beginDate.value;
-    // var end = filter.endDate.value;
-    // var beginMs = new Date(begin).getTime();
-    // var endMs = new Date(end).getTime();
-    // var numDaysBetweenDates = ((endMs - beginMs) / dayLength) + 1;
-    // console.log(beginMs)
-    // console.log(numDaysBetweenDates);
-    // console.log(myChart.data.datasets[0].data)
-    console.log(goal.dataSet)
-  });
+  return myChart;
 };
 
-renderChart(goal);
+var myChart = renderChart(goal);
 setDefaultDates(goal.startDate, goal.daysToTrack);
+
+document.getElementById('applyFilterBtn').addEventListener('click', () => {
+  var start = moment(filter.beginDate.value, 'YYYY-MM-DD');
+  var end = moment(filter.endDate.value, 'YYYY-MM-DD');
+
+  if (end.isBefore(start)) {
+    var holderStart = start.clone();
+    var holderEnd = end.clone();
+    start = holderEnd;
+    end = holderStart;
+  }
+
+  var range = moment.range(start, end);
+  var filteredDataSet = goal.dataSet.filter(dataPoint => {
+    var tempMoment = moment(dataPoint.setDate, 'MM-DD-YYYY');
+    return range.contains(tempMoment);
+  });
+
+  var newLabels = filteredDataSet.map(dataPoint => {
+    return dataPoint.setDate;
+  });
+
+  var newData = filteredDataSet.map(dataPoint => {
+    return dataPoint.value;
+  });
+
+  myChart.data.datasets[0].data = newData;
+  myChart.data.labels = newLabels;
+  myChart.update();
+});
