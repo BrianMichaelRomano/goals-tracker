@@ -19,6 +19,9 @@ var filter = {};
 filter.beginDate = document.querySelector('#beginDate');
 filter.endDate = document.querySelector('#endDate');
 
+var submitForm = {};
+submitForm.setDate = document.querySelector('#setDate');
+
 function dateToInputValue(date) {
   var dateArray = date.split('/');
   return [dateArray[2], dateArray[0], dateArray[1]].join('-');
@@ -36,15 +39,20 @@ function getDataValueArray(dataSet) {
   });
 };
 
-function setDefaultFilterDates(startDate, daysToTrack) {
-  var beginMoment = moment(startDate, 'MM-DD-YYYY');
-  var endDate = beginMoment.add((daysToTrack - 1), 'day').format('MM[/]DD[/]YYYY');
+function setDefaultDates(startDate, daysToTrack) {
+  var endDate = moment(startDate, 'MM-DD-YYYY').add((daysToTrack - 1), 'day').format('MM[/]DD[/]YYYY');
+  var today = moment().startOf('day').format('MM[/]DD[/]YYYY');
+
   filter.beginDate.value = dateToInputValue(startDate);
   filter.beginDate.min = dateToInputValue(startDate);
   filter.beginDate.max = dateToInputValue(endDate);
   filter.endDate.value = dateToInputValue(endDate);
   filter.endDate.min = dateToInputValue(startDate);
   filter.endDate.max = dateToInputValue(endDate);
+
+  submitForm.setDate.value = dateToInputValue(today);
+  submitForm.setDate.min = dateToInputValue(startDate);
+  submitForm.setDate.max = dateToInputValue(endDate);
 };
 
 function renderChart(goal) {
@@ -133,4 +141,4 @@ function renderChart(goal) {
 };
 
 renderChart(goal);
-setDefaultFilterDates(goal.startDate, goal.daysToTrack);
+setDefaultDates(goal.startDate, goal.daysToTrack);
