@@ -37,9 +37,8 @@ function getDataValueArray(dataSet) {
 };
 
 function setDefaultFilterDates(startDate, daysToTrack) {
-  var beginMoment = moment(startDate, 'DD-MM-YYYY');
+  var beginMoment = moment(startDate, 'MM-DD-YYYY');
   var endDate = beginMoment.add((daysToTrack - 1), 'day').format('MM[/]DD[/]YYYY');
-
   filter.beginDate.value = dateToInputValue(startDate);
   filter.beginDate.min = dateToInputValue(startDate);
   filter.beginDate.max = dateToInputValue(endDate);
