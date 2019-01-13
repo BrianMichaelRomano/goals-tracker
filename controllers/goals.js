@@ -74,7 +74,7 @@ exports.postAddGoal = (req, res, next) => {
     daysToTrack: req.body.daysToTrack,
     backgroundColor: req.body.backgroundColor,
     dataSet: zeroOutDataSet,
-    startDate: goalStartDate.toDate()
+    startDate: goalStartDate.format('MM[/]DD[/]YYYY')
   });
   req.user.goals.push(newGoal);
   req.user.save()
