@@ -1,7 +1,7 @@
 window['moment-range'].extendMoment(moment);
 
 var goalId = location.pathname.split('/')[3];
-fetch(`http://localhost:5000/goals/goal/${goalId}`)
+fetch(`sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
   .then(goal => {
     return goal.json();
   })
