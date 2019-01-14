@@ -15,7 +15,93 @@
     </h1>
     <canvas id="myChart" width="800" height="400"></canvas>
 
-    <div id="filter-panel">
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header text-center" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseThree"
+              aria-expanded="false" aria-controls="collapseThree">
+              Add Data Point
+            </button>
+            <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+              aria-controls="collapseOne">
+              Filters
+            </button>
+            <button class="btn btn-dark collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+              aria-expanded="false" aria-controls="collapseTwo">
+              Controls
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="beginDate">From</label>
+                  <input class="form-control" type="date" id="beginDate">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="endDate">To</label>
+                  <input class="form-control" type="date" id="endDate">
+                </div>
+              </div>
+            </div>
+            <button id="applyFilterBtn" class="btn btn-dark">Apply</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+            <hr>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" checked="checked" id="dataPointToggle">
+                  <label class="form-check-label" for="defaultCheck1">
+                    Toggle Data Points
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="formControlRange">Max Y Axis</label>
+                  <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+            <form action="/goals/goal/add-data/<%= goal._id %>" method="POST" class="form-center">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <div class="form-group">
+                <label for="setDate">Date</label>
+                <input class="form-control" name="setDate" type="date" id="setDate">
+              </div>
+              <div class="form-group">
+                <label for="hours">
+                  <%= goal.goalType %></label>
+                <input class="form-control" type="number" name="hours" placeholder="0" step="0.01" id="dataPointInput">
+              </div>
+              <div class="text-center">
+                <button class="btn btn-dark" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="filter-panel">
       <div id="chartFilters" class="card">
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-muted">Chart Filter</h6>
@@ -37,48 +123,48 @@
           <button id="applyFilterBtn" class="btn btn-dark">Apply</button>
         </div>
       </div>
+    </div>
 
-      <div id="chartControls" class="card">
-        <div class="card-body">
-          <h6 class="card-subtitle mb-2 text-muted">Chart Controls</h6>
-          <hr>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" checked="checked" id="dataPointToggle">
-                <label class="form-check-label" for="defaultCheck1">
-                  Toggle Data Points
-                </label>
-              </div>
+    <div id="chartControls" class="card">
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">Chart Controls</h6>
+        <hr>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" checked="checked" id="dataPointToggle">
+              <label class="form-check-label" for="defaultCheck1">
+                Toggle Data Points
+              </label>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="formControlRange">Max Y Axis</label>
-                <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
-              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="formControlRange">Max Y Axis</label>
+              <input type="range" min="0" max="24" step="1" value="24" class="form-control-range" id="yAxisRange">
             </div>
           </div>
         </div>
       </div>
-
-      <div id="dataDetails"></div>
-
-      <form action="/goals/goal/add-data/<%= goal._id %>" method="POST" class="form-center">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <div class="form-group">
-          <label for="setDate">Date</label>
-          <input class="form-control" name="setDate" type="date" id="setDate">
-        </div>
-        <div class="form-group">
-          <label for="hours">
-            <%= goal.goalType %></label>
-          <input class="form-control" type="number" name="hours" placeholder="0" step="0.01" id="dataPointInput">
-        </div>
-        <div class="text-center">
-          <button class="btn btn-dark" type="submit">Submit</button>
-        </div>
-      </form>
     </div>
+
+    <div id="dataDetails"></div>
+
+    <form action="/goals/goal/add-data/<%= goal._id %>" method="POST" class="form-center">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-group">
+        <label for="setDate">Date</label>
+        <input class="form-control" name="setDate" type="date" id="setDate">
+      </div>
+      <div class="form-group">
+        <label for="hours">
+          <%= goal.goalType %></label>
+        <input class="form-control" type="number" name="hours" placeholder="0" step="0.01" id="dataPointInput">
+      </div>
+      <div class="text-center">
+        <button class="btn btn-dark" type="submit">Submit</button>
+      </div>
+    </form> -->
   </main>
 
   <%- include('../includes/footer.ejs') %>
