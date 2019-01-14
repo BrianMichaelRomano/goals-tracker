@@ -53,6 +53,14 @@ exports.getAddGoal = (req, res, next) => {
   });
 };
 
+exports.getGoal = (req, res, next) => {
+  const goal = req.user.goals.find(goal => {
+    return goal._id.toString() === req.params.goalId;
+  });
+
+  res.json(goal);
+};
+
 exports.postAddGoal = (req, res, next) => {
 
   const zeroOutDataSet = [];

@@ -1,5 +1,15 @@
 window['moment-range'].extendMoment(moment);
 
+var goalId = location.pathname.split('/')[3];
+fetch(`http://localhost:5000/goals/goal/${goalId}`)
+  .then(goal => {
+    return goal.json();
+  })
+  .then(goalData => {
+    console.log(goalData);
+  })
+  .catch(err => console.log(err));
+
 var dataDetails = document.querySelector('#dataDetails');
 
 var goal = {};
