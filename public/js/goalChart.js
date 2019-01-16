@@ -93,7 +93,36 @@ fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
               }
             }]
           },
-          responsive: true
+          responsive: true,
+          annotation: {
+            annotations: [{
+              type: 'line',
+              drawTime: 'afterDatasetsDraw',
+              id: 'a-line-1',
+              mode: 'horizontal',
+              scaleID: 'y-axis-0',
+              value: goal.goalTarget,
+              borderColor: 'green',
+              borderWidth: 2,
+              borderDash: [2, 2],
+              borderDashOffset: 5,
+              label: {
+                backgroundColor: 'rgba(0,0,0,0)',
+                fontFamily: "sans-serif",
+                fontSize: 16,
+                fontStyle: "bold",
+                fontColor: 'rgba(0,0,0,0.4)',
+                xPadding: 6,
+                yPadding: 6,
+                cornerRadius: 6,
+                position: "center",
+                xAdjust: 0,
+                yAdjust: 0,
+                enabled: true,
+                content: "Goal Target"
+              }
+            }]
+          }
         }
       });
 
@@ -156,6 +185,13 @@ fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
 
       myChart.data.datasets[0].data = newData;
       myChart.data.labels = newLabels;
+      myChart.update();
+    });
+
+    document.querySelector('#resetFilterBtn').addEventListener('click', () => {
+      setDefaultDates(goal.startDate, goal.daysToTrack);
+      myChart.data.datasets[0].data = getDataValueArray(goal.dataSet);
+      myChart.data.labels = createChartLabels();
       myChart.update();
     });
   })
