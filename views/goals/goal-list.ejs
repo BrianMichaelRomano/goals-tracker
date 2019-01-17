@@ -13,24 +13,14 @@
     <h1 class="text-center">Goals</h1>
     <a href="/goals/add-goal" class="btn btn-dark"><strong>+</strong></a>
     <% goals.forEach((goal) => { %>
-    <div class="card mt-3" style="background-color: <%= goal.backgroundColor %>">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-6">
-            <h4>
-              <%= goal.goalName %>
-            </h4>
-          </div>
-          <div class="col-6">
-            <form action="/goals/delete-goal" method="POST">
-              <button class="btn btn-danger float-right"><i class="fas fa-times"></i></i></button>
-              <a class="btn btn-dark float-right mr-3" href="/goals/goal-chart/<%= goal._id %>"><i class="fas fa-chart-line"></i></a>
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <input type="hidden" name="goalId" id="goalId">
-            </form>
-          </div>
+    <div class="card mt-3 goal-button" style="background-color: <%= goal.backgroundColor %>">
+      <a class="btn" href="/goals/goal-chart/<%= goal._id %>">
+        <div class="card-body text-center">
+          <h4>
+            <%= goal.goalName %>
+          </h4>
         </div>
-      </div>
+      </a>
     </div>
     <% }) %>
   </main>

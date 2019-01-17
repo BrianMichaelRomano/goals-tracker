@@ -28,3 +28,11 @@ input {
   background-color: transparent;
 }
 
+.goal-button a{
+  color: black;
+}
+
+.goal-button a:hover {
+  background-color: rgba(22, 22, 22, 0.534);
+  color: white;
+}
