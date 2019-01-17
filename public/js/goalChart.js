@@ -1,12 +1,12 @@
-window['moment-range'].extendMoment(moment);
+// window['moment-range'].extendMoment(moment);
 
-var goalId = location.pathname.split('/')[3];
-fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
-  .then(goalData => {
-    return goalData.json();
-  })
-  .then(goal => {
-    console.log(goal)
+// var goalId = location.pathname.split('/')[3];
+// fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
+//   .then(goalData => {
+//     return goalData.json();
+//   })
+//   .then(goal => {
+//     console.log(goal)
 
     // var dataDetails = document.querySelector('#dataDetails');
 
@@ -195,5 +195,5 @@ fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
     //   myChart.data.labels = createChartLabels();
     //   myChart.update();
     // });
-  })
-  .catch(err => console.log(err));
+  // })
+  // .catch(err => console.log(err));
