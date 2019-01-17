@@ -1,6 +1,8 @@
 window['moment-range'].extendMoment(moment);
 
 var goalId = location.pathname.split('/')[3];
+console.log(goalId);
+console.log(location.pathname)
 fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`)
   .then(goalData => {
     return goalData.json();
