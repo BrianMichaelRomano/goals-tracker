@@ -32,9 +32,7 @@ app.use('/images', express.static(path.join(rootDir, 'images')));
 
 const store = new MongodbStore({
   uri: DB_URI,
-  collection: 'sessions',
-  autoRemove: 'interval',
-  autoRemoveInterval: 24 * 60 * 60 * 1000
+  collection: 'sessions'
 },
   function (err) {
     if (err) {
@@ -53,12 +51,7 @@ app.use(session({
   secret: SESS_SECRET,
   saveUninitialized: false,
   resave: false,
-  store: store,
-  cookie: {
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
-  },
-  resave: false
+  store: store
 }));
 
 const fileStorage = multer.diskStorage({
@@ -86,7 +79,7 @@ app.use((req, res, next) => {
   User.findById({ _id: req.session.userId })
     .then(user => {
       if (!user) {
-        next();
+        return next();
       }
       req.user = user;
       next();
