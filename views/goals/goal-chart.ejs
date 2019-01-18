@@ -108,6 +108,16 @@
     </div>
   </main>
 
+  <input type="hidden" id="goalName" value="<%= goal.goalName %>">
+  <input type="hidden" id="startDate" value="<%= goal.startDate %>">
+  <input type="hidden" id="goalType" value="<%= goal.goalType %>">
+  <input type="hidden" id="goalTarget" value="<%= goal.goalTarget %>">
+  <input type="hidden" id="chartType" value="<%= goal.chartType %>">
+  <input type="hidden" id="daysToTrack" value="<%= goal.daysToTrack %>">
+  <input type="hidden" id="dataSet" value="<%= JSON.stringify(goal.dataSet) %>">
+  <input type="hidden" id="backgroundColor" value="<%= goal.backgroundColor %>">
+  <input type="hidden" id="borderColor" value="<%= goal.borderColor %>">
+
   <%- include('../includes/footer.ejs') %>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
