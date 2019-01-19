@@ -5,7 +5,7 @@ fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`, {
   credentials: "same-origin"
 })
   .then(goalData => {
-    return goalData.text();
+    return goalData.json();
   })
   .then(goal => {
     console.log(goal)
