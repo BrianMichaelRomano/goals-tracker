@@ -28,7 +28,13 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(rootDir, 'public')));
-app.use(express.favicon());
+app.use((req, res, next) => {
+  if (req.path === '/favicon.ico') {
+    console.log('Favicon blocked...')
+    return res.send('Blocking favicon to not create more sessions... Implement code for handling favicons.')
+  }
+  next();
+});
 
 const store = new MongodbStore({
   uri: DB_URI,
