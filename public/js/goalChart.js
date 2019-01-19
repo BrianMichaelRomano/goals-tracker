@@ -8,7 +8,6 @@ fetch(`https://sheltered-thicket-56176.herokuapp.com/goals/goal/${goalId}`, {
     return goalData.json();
   })
   .then(goal => {
-    console.log(goal)
 
     var dataDetails = document.querySelector('#dataDetails');
 
